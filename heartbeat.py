@@ -3,8 +3,8 @@ import requests
 from datetime import datetime
 
 # ===== إعدادات الموظف والسيرفر =====
-EMPLOYEE_ID = 123  # ضع هنا رقم الموظف
-SERVER_URL = "https://your-server.com/heartbeat.php"  # رابط السيرفر عندك
+EMPLOYEE_ID = 5  # ضع هنا رقم الموظف
+SERVER_URL = "http://attendanceejaz.codeyla.com/heartbeat.php"  # رابط السيرفر عندك
 
 # REST API المحلي لـ ActivityWatch
 AW_LOCAL_API = "http://127.0.0.1:5600/api/0"  # عادة localhost:5600

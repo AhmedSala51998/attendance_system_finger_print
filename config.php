@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli("localhost","root","","attendance");
+$conn = new mysqli("localhost","u552468652_attendance_sys","Attendance_sys12345","u552468652_attendance_sys");
 
 if($conn->connect_error){
     die("DB Error");

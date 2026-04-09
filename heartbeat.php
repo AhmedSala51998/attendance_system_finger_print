@@ -30,6 +30,9 @@ $now_str = $now->format('Y-m-d H:i:s');
 $last_status = $row['last_status'] ?? 'not-afk';
 $afk_start = $row['afk_start'] ?? null;
 
+// نحدد بداية الشيفت من check_in
+$shift_start = new DateTime($row['check_in'] ?? $now_str);
+
 $actual_interruption = 0;
 
 /*
@@ -38,6 +41,8 @@ $actual_interruption = 0;
 ========================
 */
 if($status == 'afk' && $last_status != 'afk'){
+    // إذا AFK قبل بداية الشيفت، نعتبره من بداية الشيفت
+    if($now < $shift_start) $now = clone $shift_start;
 
     $stmt = $conn->prepare("
         UPDATE attendance 
@@ -56,30 +61,38 @@ if($status == 'afk' && $last_status != 'afk'){
 if($status != 'afk' && $last_status == 'afk' && $afk_start){
 
     $afk_start_dt = new DateTime($afk_start);
+
+    // لا نحسب AFK قبل بداية الشيفت
+    if($afk_start_dt < $shift_start) $afk_start_dt = clone $shift_start;
+
     $minutes = floor(($now->getTimestamp() - $afk_start_dt->getTimestamp()) / 60);
 
-    // خصم وقت البريك
-    $break_start = new DateTime(date('Y-m-d 16:00:00'));
-    $break_end   = new DateTime(date('Y-m-d 17:00:00'));
+    // تجاهل أي AFK أقل من 15 دقيقة
+    if($minutes >= 15){
 
-    $overlap_start = max($afk_start_dt->getTimestamp(), $break_start->getTimestamp());
-    $overlap_end   = min($now->getTimestamp(), $break_end->getTimestamp());
+        // خصم وقت البريك
+        $break_start = new DateTime(date('Y-m-d 16:00:00'));
+        $break_end   = new DateTime(date('Y-m-d 17:00:00'));
 
-    $overlap = 0;
-    if($overlap_end > $overlap_start){
-        $overlap = floor(($overlap_end - $overlap_start) / 60);
-    }
+        $overlap_start = max($afk_start_dt->getTimestamp(), $break_start->getTimestamp());
+        $overlap_end   = min($now->getTimestamp(), $break_end->getTimestamp());
 
-    $actual_interruption = max(0, $minutes - $overlap);
+        $overlap = 0;
+        if($overlap_end > $overlap_start){
+            $overlap = floor(($overlap_end - $overlap_start) / 60);
+        }
 
-    if($actual_interruption > 0){
-        $stmt = $conn->prepare("
-            UPDATE attendance 
-            SET interrupted_minutes = interrupted_minutes + ?
-            WHERE id=?
-        ");
-        $stmt->bind_param("ii", $actual_interruption, $row['id']);
-        $stmt->execute();
+        $actual_interruption = max(0, $minutes - $overlap);
+
+        if($actual_interruption > 0){
+            $stmt = $conn->prepare("
+                UPDATE attendance 
+                SET interrupted_minutes = interrupted_minutes + ?
+                WHERE id=?
+            ");
+            $stmt->bind_param("ii", $actual_interruption, $row['id']);
+            $stmt->execute();
+        }
     }
 }
 

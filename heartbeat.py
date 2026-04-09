@@ -14,16 +14,27 @@ last_sent_idle = 0  # 🔥 آخر قيمة idle تم إرسالها
 
 def get_idle_minutes():
     try:
-        # نجيب أحدث الأحداث من watcher
-        resp = requests.get(f"{AW_LOCAL_API}/buckets/{WATCHER_ID}/events?limit=1", timeout=5)
+        resp = requests.get(f"{AW_LOCAL_API}/buckets/{WATCHER_ID}/events?limit=5", timeout=5)
         resp.raise_for_status()
         events = resp.json()
+
         if events:
-            duration_sec = events[0]["duration"]
+            event = events[-1]  # 🔥 آخر event حتى لو شغال
+
+            status = event["data"].get("status")
+
+            print(f"DEBUG -> Status: {status}, Duration: {event['duration']}")
+
+            if status != "afk":
+                return 0
+
+            duration_sec = event["duration"]
             return int(duration_sec / 60)
+
         return 0
+
     except Exception as e:
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] Error fetching AW events: {e}")
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Error: {e}")
         return 0
 
 def send_heartbeat(idle_minutes):

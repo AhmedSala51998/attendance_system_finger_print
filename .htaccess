@@ -1,0 +1,16 @@
+Options -MultiViews -Indexes
+RewriteEngine On
+RewriteBase /attendance/
+
+# 🛡️ منع تسريب مسار الويندوز
+RewriteCond %{REQUEST_URI} ^/C:/ [NC]
+RewriteRule ^ /attendance/ [L,R=301]
+
+# ✅ إزالة .php من الروابط
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /+attendance/(.*)\.php [NC]
+RewriteRule ^ /attendance/%1 [L,R=301]
+
+# ✅ توجيه الروابط النظيفة للملفات
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]

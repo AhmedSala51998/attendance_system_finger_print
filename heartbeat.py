@@ -57,13 +57,7 @@ print("ActivityWatch Heartbeat script running...")
 while True:
     idle_minutes = get_idle_minutes()
 
-    # 🔄 لو رجع نشيط (مش idle)
-    if idle_minutes == 0:
-        last_sent_idle = 0
+    # 🔥 ابعت كل دقيقة بغض النظر
+    send_heartbeat(idle_minutes)
 
-    # 🔥 ابعت بس لو في زيادة جديدة
-    if idle_minutes > last_sent_idle:
-        send_heartbeat(idle_minutes)
-        last_sent_idle = idle_minutes
-
-    time.sleep(60)  # انتظر دقيقة
+    time.sleep(60)  # كل دقيقة

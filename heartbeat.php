@@ -21,7 +21,7 @@ if($res->num_rows == 0) exit();
 
 $row = $res->fetch_assoc();
 
-$now = new DateTime();
+$now = new DateTime($input['timestamp']);
 $check_in_time = new DateTime($row['check_in']);
 
 $last_hb = !empty($row['last_heartbeat']) ? new DateTime($row['last_heartbeat']) : null;

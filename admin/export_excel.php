@@ -64,7 +64,7 @@ echo "\xEF\xBB\xBF"; // UTF-8 BOM
                 <td><?php echo $row['late_break_minutes']; ?></td>
                 <td><?php echo $row['interrupted_minutes']; ?></td>
                 <td>
-                    <span style="font-weight:bold; color:#4F46E5;">
+                    <span style="font-weight:bold; color:#4F46E5;mso-number-format:'\@'">
                         <?php echo formatWorkHours($row['work_hours']); ?>
                     </span>
                 </td>

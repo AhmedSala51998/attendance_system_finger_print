@@ -31,7 +31,7 @@ echo "\xEF\xBB\xBF"; // UTF-8 BOM
 ?>
 
 <table border="1">
-    <thead style="background: #f8fafc; border-bottom: 2px solid #f1f5f9;">
+    <thead style="background-color: #4F46E5; color: white;">
         <tr>
             <th>الموظف</th>
             <th>التاريخ</th>
@@ -63,10 +63,8 @@ echo "\xEF\xBB\xBF"; // UTF-8 BOM
                 <td><?php echo $row['break_minutes']; ?></td>
                 <td><?php echo $row['late_break_minutes']; ?></td>
                 <td><?php echo $row['interrupted_minutes']; ?></td>
-                <td>
-                    <span style="font-weight:bold; color:#4F46E5;mso-number-format:'\@'">
-                        <?php echo formatWorkHours($row['work_hours']); ?>
-                    </span>
+                <td style="font-weight:bold; color:#4F46E5; mso-number-format:'\@';">
+                    <?php echo "'" . formatWorkHours($row['work_hours']); ?>
                 </td>
             </tr>
         <?php endwhile; ?>

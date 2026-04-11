@@ -95,7 +95,7 @@ include "layout/header.php";
 
             <div style="display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;">
                 <?php if($status == 'checked_out'): ?>
-                    <button id="checkInBtn" class="action-btn-premium" style="background: linear-gradient(135deg, #10b981, #059669); color: white; width: 280px; height: 75px;" onclick="checkIn(this)">
+                    <button id="checkInBtn" class="action-btn-premium" style="background: linear-gradient(135deg, #10b981, #059669); color: white; width: 280px; height: 75px;" onclick="smartCheckIn(this)">
                         <i class="fas fa-fingerprint" style="font-size: 24px;"></i>
                         <span>تسجيل حضور ذكي</span>
                     </button>

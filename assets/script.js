@@ -115,6 +115,48 @@ function confirmLogout() {
     });
 }
 
+async function smartCheckIn(btn) {
+
+    Swal.fire({
+        title: 'تأكيد تسجيل الحضور',
+        text: 'اضغط تأكيد ثم تحقق بالبصمة',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'تأكيد',
+        cancelButtonText: 'إلغاء'
+    }).then(async (result) => {
+
+        if (!result.isConfirmed) return;
+
+        // 📱 لو موبايل ويدعم البصمة
+        if (window.PublicKeyCredential && /Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+            try {
+                const publicKey = {
+                    challenge: new Uint8Array(32),
+                    timeout: 60000,
+                    userVerification: "required"
+                };
+
+                await navigator.credentials.get({ publicKey });
+
+                // ✅ بصمة نجحت
+                checkIn(btn);
+
+            } catch (err) {
+                console.log(err);
+
+                // ❌ فشل البصمة → نكمل عادي
+                checkIn(btn);
+            }
+
+        } else {
+            // 💻 كمبيوتر
+            checkIn(btn);
+        }
+
+    });
+}
+
 // ✅ 5. تسجيل الحضور (Check-in)
 function checkIn(btn) {
     if (navigator.geolocation) {

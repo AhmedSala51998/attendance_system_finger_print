@@ -103,7 +103,7 @@ include "layout/header.php";
                     <button id="checkOutBtn" class="action-btn-premium" 
                         style="background: <?php echo $is_on_break ? '#f1f5f9' : 'linear-gradient(135deg, #ef4444, #dc2626)'; ?>; color: <?php echo $is_on_break ? '#94a3b8' : 'white'; ?>; width: 280px; height: 75px; cursor: <?php echo $is_on_break ? 'not-allowed' : 'pointer'; ?>;" 
                         <?php echo $is_on_break ? 'disabled' : ''; ?>
-                        onclick="checkOut(this)">
+                        onclick="smartCheckOut(this)">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>إنهاء الدوام الآن</span>
                     </button>

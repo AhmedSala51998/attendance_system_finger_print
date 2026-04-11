@@ -206,6 +206,48 @@ function checkIn(btn) {
     }
 }
 
+async function smartCheckOut(btn) {
+
+    Swal.fire({
+        title: 'تأكيد إنهاء الدوام',
+        text: 'اضغط تأكيد ثم تحقق بالبصمة',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'تأكيد الانصراف',
+        cancelButtonText: 'إلغاء'
+    }).then(async (result) => {
+
+        if (!result.isConfirmed) return;
+
+        // 📱 لو موبايل ويدعم البصمة
+        if (window.PublicKeyCredential && /Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+            try {
+                const publicKey = {
+                    challenge: new Uint8Array(32),
+                    timeout: 60000,
+                    userVerification: "required"
+                };
+
+                await navigator.credentials.get({ publicKey });
+
+                // ✅ بصمة نجحت
+                checkOut(btn);
+
+            } catch (err) {
+                console.log(err);
+
+                // ❌ فشل البصمة → نكمل عادي
+                checkOut(btn);
+            }
+
+        } else {
+            // 💻 كمبيوتر
+            checkOut(btn);
+        }
+
+    });
+}
+
 // ✅ 6. تسجيل الانصراف (Check-out)
 function checkOut(btn) {
     btn.disabled = true;

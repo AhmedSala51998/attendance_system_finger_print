@@ -479,3 +479,80 @@ tr:hover {
     width: 100%;
     display: block;
 }
+
+
+/* 📱 موبايل */
+@media (max-width: 768px) {
+
+    .dashboard {
+        margin: 15px !important;
+        max-width: 100% !important;
+    }
+
+    /* 🔷 الهيدر */
+    .user-header {
+        flex-direction: column !important;
+        text-align: center;
+        padding: 25px !important;
+        gap: 20px;
+    }
+
+    .user-header h1 {
+        font-size: 22px !important;
+    }
+
+    #digital-clock {
+        font-size: 38px !important;
+    }
+
+    .user-header > div:last-child {
+        min-width: auto !important;
+        width: 100%;
+        padding: 20px !important;
+    }
+
+    /* ⚡ كارت الحضور */
+    .attendance-card {
+        padding: 25px 15px !important;
+        border-radius: 25px !important;
+    }
+
+    /* 🔘 الأزرار */
+    .action-btn-premium {
+        width: 100% !important;
+        height: 60px !important;
+        font-size: 16px;
+    }
+
+    /* 🧩 الجريد */
+    .dashboard > div[style*="grid"] {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    /* 📦 الكروت */
+    .action-card {
+        padding: 25px !important;
+    }
+
+    .action-card span {
+        font-size: 16px !important;
+    }
+
+    /* ⏱️ عداد العمل */
+    #work-duration-counter {
+        font-size: 22px !important;
+    }
+
+    /* 📊 الحالة */
+    #status-controller div {
+        font-size: 13px !important;
+        padding: 10px 15px !important;
+    }
+
+    /* 🍔 زر الخروج */
+    .btn {
+        width: 100% !important;
+        justify-content: center;
+    }
+}

@@ -6,7 +6,64 @@ if($_SESSION['role'] == 'admin'){ header("Location: ../admin/index.php"); exit()
 $id = $_SESSION['employee_id'];
 include "../layout/header.php"; 
 ?>
+<style>
+    /* 📱 Mobile Attendance Table */
+@media (max-width: 768px) {
 
+    .dashboard {
+        margin: 15px !important;
+        max-width: 100% !important;
+    }
+
+    /* 🔷 العنوان */
+    .dashboard h2 {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    /* 📊 اخفاء الجدول وتحويله لكروت */
+    table {
+        border: 0;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tr {
+        display: block;
+        margin-bottom: 15px;
+        background: #fff;
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border: none !important;
+        font-size: 14px;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #6b7280;
+    }
+
+    /* 🔘 زر الرجوع */
+    .btn {
+        width: 100% !important;
+        text-align: center;
+    }
+
+    .table-wrapper {
+        overflow: visible !important;
+    }
+}
+</style>
 <div class="dashboard" style="margin: 40px auto; max-width: 1000px;">
     
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">

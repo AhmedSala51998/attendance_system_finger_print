@@ -31,7 +31,7 @@ echo "\xEF\xBB\xBF"; // UTF-8 BOM
 ?>
 
 <table border="1">
-    <thead style="background-color: #4F46E5; color: white;">
+    <thead style="background: #f8fafc; border-bottom: 2px solid #f1f5f9;">
         <tr>
             <th>الموظف</th>
             <th>التاريخ</th>

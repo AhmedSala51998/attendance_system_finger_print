@@ -51,12 +51,12 @@ include "../layout/header.php";
                         }
 
                         echo "<tr>
-                            <td><strong>{$row['date']}</strong></td>
-                            <td>" . ($row['check_in'] != '-' ? date('h:i A', strtotime($row['check_in'])) : '-') . "</td>
-                            <td>{$check_out}</td>
-                            <td>{$late_minutes}</td>
-                            <td>{$work_hours}</td>
-                            <td>{$status_badge}</td>
+                            <td data-label='التاريخ'><strong>{$row['date']}</strong></td>
+                            <td data-label='الحضور'>" . ($row['check_in'] != '-' ? date('h:i A', strtotime($row['check_in'])) : '-') . "</td>
+                            <td data-label='الانصراف'>{$check_out}</td>
+                            <td data-label='التأخير'>{$late_minutes}</td>
+                            <td data-label='ساعات العمل'>{$work_hours}</td>
+                            <td data-label='الحالة'>{$status_badge}</td>
                         </tr>";
                     }
                 } else {

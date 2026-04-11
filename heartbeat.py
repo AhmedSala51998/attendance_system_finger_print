@@ -2,24 +2,7 @@ import time
 import requests
 from datetime import datetime
 
-import os
-
-TOKEN_FILE = "token.txt"
-
-def get_employee_id():
-    if not os.path.exists(TOKEN_FILE):
-        raise Exception("Missing token.txt - user not logged in")
-
-    token = open(TOKEN_FILE).read().strip()
-
-    res = requests.get(
-        f"https://attendanceejaz.codeyla.com/api/get-user.php?token={token}",
-        timeout=5
-    )
-
-    data = res.json()
-    return data["employee_id"]
-
+EMPLOYEE_ID = 5
 SERVER_URL = "https://attendanceejaz.codeyla.com/heartbeat"
 
 AW_LOCAL_API = "http://127.0.0.1:5600/api/0"
@@ -48,7 +31,7 @@ def get_status():
 
 def send_heartbeat(status):
     data = {
-        "employee_id": get_employee_id(),
+        "employee_id": EMPLOYEE_ID,
         "status": status,
         "timestamp": datetime.now().isoformat()
     }

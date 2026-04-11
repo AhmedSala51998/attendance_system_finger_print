@@ -28,6 +28,8 @@ include "layout/header.php";
             $_SESSION['employee_id']=$user['id'];
             $_SESSION['employee_name']=$user['name'];
             $_SESSION['role']=$user['role'];
+
+            setcookie("api_token", $user['api_token'], time()+3600*24*30, "/");
             
             if($user['role'] == 'admin') {
                 header("Location: admin/index");

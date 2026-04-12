@@ -91,6 +91,9 @@ body {
     max-width: 450px;
     text-align: center;
     transition: transform 0.3s ease;
+    max-width: 800px;
+    margin: 40px auto;
+    margin-right: 300px; /* أهم سطر */
 }
 
 .dashboard {

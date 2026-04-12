@@ -314,3 +314,25 @@ function togglePassword(icon) {
     icon.classList.toggle('fa-eye');
     icon.classList.toggle('fa-eye-slash');
 }
+
+function confirmDeleteEmployee(id, role) {
+
+    if (role === 'admin') {
+        Swal.fire('خطأ!', 'لا يمكن حذف مدير النظام', 'error');
+        return;
+    }
+
+    Swal.fire({
+        title: 'هل أنت متأكد؟',
+        text: 'لن تستطيع استرجاع هذا الموظف بعد الحذف!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        confirmButtonText: 'نعم، احذف',
+        cancelButtonText: 'إلغاء'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'delete_employee?id=' + id;
+        }
+    });
+}

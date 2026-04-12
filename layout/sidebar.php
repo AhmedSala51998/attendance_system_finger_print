@@ -1,8 +1,17 @@
 <?php
-$current = basename($_SERVER['REQUEST_URI']);
-function isActive($page, $current){
-    return strpos($current, $page) !== false ? 'active' : '';
+function navActive($key, $current){
+    $isActive = strpos($current, $key) !== false;
+
+    return $isActive ? [
+        'class' => 'active',
+        'pill'  => '<div class="active-pill"></div>'
+    ] : [
+        'class' => '',
+        'pill'  => ''
+    ];
 }
+
+$current = basename($_SERVER['REQUEST_URI']);
 ?>
 <div class="sidebar-pro" id="sidebar">
 
@@ -24,70 +33,86 @@ function isActive($page, $current){
 
         <?php if($_SESSION['role'] == 'admin'): ?>
 
+            <?php $nav = navActive('dashboard', $current); ?>
             <li>
-                <a href="/index" class="<?php echo isActive('index', $current); ?>">
+                <a href="/index" class="<?= $nav['class']; ?>">
                     <i class="fas fa-home"></i>
                     <span>الرئيسية</span>
-                    <div class="active-pill"></div>
+                    <?= $nav['pill']; ?>
                 </a>
             </li>
 
+            <?php $nav = navActive('employees', $current); ?>
             <li>
-                <a href="/employees" class="<?php echo isActive('employees', $current); ?>">
+                <a href="/employees" class="<?= $nav['class']; ?>">
                     <i class="fas fa-users"></i>
                     <span>الموظفين</span>
+                    <?= $nav['pill']; ?>
                 </a>
             </li>
 
+            <?php $nav = navActive('attendance_report', $current); ?>
             <li>
-                <a href="/attendance_report" class="<?php echo isActive('attendance_report', $current); ?>">
+                <a href="/attendance_report" class="<?= $nav['class']; ?>">
                     <i class="fas fa-chart-line"></i>
                     <span>التقارير</span>
+                    <?= $nav['pill']; ?>
                 </a>
             </li>
 
+            <?php $nav = navActive('holidays', $current); ?>
             <li>
-                <a href="/holidays" class="<?php echo isActive('holidays', $current); ?>">
+                <a href="/holidays" class="<?= $nav['class']; ?>">
                     <i class="fas fa-umbrella-beach"></i>
                     <span>الإجازات</span>
+                    <?= $nav['pill']; ?>
                 </a>
             </li>
 
+            <?php $nav = navActive('settings', $current); ?>
             <li>
-                <a href="/settings" class="<?php echo isActive('settings', $current); ?>">
+                <a href="/settings" class="<?= $nav['class']; ?>">
                     <i class="fas fa-cog"></i>
                     <span>الإعدادات</span>
+                    <?= $nav['pill']; ?>
                 </a>
             </li>
 
         <?php else: ?>
 
+            <?php $nav = navActive('dashboard', $current); ?>
             <li>
-                <a href="/dashboard" class="<?php echo isActive('dashboard', $current); ?>">
+                <a href="/dashboard" class="<?= $nav['class']; ?>">
                     <i class="fas fa-home"></i>
                     <span>الرئيسية</span>
-                    <div class="active-pill"></div>
+                    <?= $nav['pill']; ?>
                 </a>
             </li>
 
+            <?php $nav = navActive('my_attendance', $current); ?>
             <li>
-                <a href="/employee/my_attendance" class="<?php echo isActive('my_attendance', $current); ?>">
+                <a href="/employee/my_attendance" class="<?= $nav['class']; ?>">
                     <i class="fas fa-calendar-alt"></i>
                     <span>سجلاتي</span>
+                    <?= $nav['pill']; ?>
                 </a>
             </li>
 
+            <?php $nav = navActive('monthly_report', $current); ?>
             <li>
-                <a href="/employee/monthly_report" class="<?php echo isActive('monthly_report', $current); ?>">
+                <a href="/employee/monthly_report" class="<?= $nav['class']; ?>">
                     <i class="fas fa-file-alt"></i>
                     <span>التقرير الشهري</span>
+                    <?= $nav['pill']; ?>
                 </a>
             </li>
 
+            <?php $nav = navActive('profile', $current); ?>
             <li>
-                <a href="/employee/profile" class="<?php echo isActive('profile', $current); ?>">
+                <a href="/employee/profile" class="<?= $nav['class']; ?>">
                     <i class="fas fa-user"></i>
                     <span>ملفي الشخصي</span>
+                    <?= $nav['pill']; ?>
                 </a>
             </li>
 

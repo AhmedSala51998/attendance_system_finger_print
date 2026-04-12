@@ -84,7 +84,7 @@
     <!-- 🔻 المستخدم (Dropdown) -->
     <div class="sidebar-user" onclick="toggleUserMenu()">
         <div class="avatar">
-            <?php echo strtoupper(substr($_SESSION['employee_name'],0,1)); ?>
+            <?php echo mb_substr($_SESSION['employee_name'], 0, 1, 'UTF-8'); ?>
         </div>
 
         <div class="user-info">

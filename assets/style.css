@@ -821,3 +821,11 @@ tr:hover {
 .user-dropdown a:hover {
     background: rgba(255,255,255,0.05);
 }
+
+
+.dashboard {
+    margin: 40px auto;
+    max-width: 1000px;
+    padding-right: 270px; /* نفس عرض الـ sidebar */
+    transition: 0.3s;
+}

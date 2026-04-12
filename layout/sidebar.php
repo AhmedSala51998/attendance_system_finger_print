@@ -120,24 +120,22 @@ $current = basename($_SERVER['REQUEST_URI']);
 
     </ul>
 
-    <?php if($_SESSION['role'] == 'employee'): ?>
     <!-- 🔻 المستخدم (Dropdown) -->
     <div class="sidebar-user" onclick="toggleUserMenu()">
         <div class="avatar">
             <?php echo mb_substr($_SESSION['employee_name'], 0, 1, 'UTF-8'); ?>
         </div>
-
         <div class="user-info">
             <strong><?php echo $_SESSION['employee_name']; ?></strong>
             <span><?php echo $_SESSION['role'] == 'admin' ? 'مدير النظام' : 'موظف'; ?></span>
         </div>
-
         <i class="fas fa-chevron-up"></i>
     </div>
-    <?php endif; ?>
     <!-- 🔻 Dropdown -->
     <div class="user-dropdown" id="userDropdown">
-        <a href="/employee/profile"><i class="fas fa-user"></i> الملف الشخصي</a>
+         <?php if($_SESSION['role'] == 'employee'): ?>
+           <a href="/employee/profile"><i class="fas fa-user"></i> الملف الشخصي</a>
+        <?php endif; ?>
         <a onclick="confirmLogout()" onclick="confirmLogout()" style="color:#ef4444;cursor:pointer">
             <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
         </a>

@@ -77,7 +77,6 @@ body {
 }
 
 /* Glassmorphism Container */
-.container,
 .dashboard,
 .glass-panel {
     background: var(--glass-bg);
@@ -93,7 +92,7 @@ body {
     transition: transform 0.3s ease;
     max-width: 800px;
     margin: 40px auto;
-    margin-right: 300px; /* أهم سطر */
+    margin-right: 300px;
 }
 
 .dashboard {

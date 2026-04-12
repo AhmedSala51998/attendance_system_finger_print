@@ -35,7 +35,7 @@ $current = basename($_SERVER['REQUEST_URI']);
 
             <?php $nav = navActive('index', $current); ?>
             <li>
-                <a href="/index" class="<?= $nav['class']; ?>">
+                <a href="/admin/index" class="<?= $nav['class']; ?>">
                     <i class="fas fa-home"></i>
                     <span>الرئيسية</span>
                     <?= $nav['pill']; ?>
@@ -44,7 +44,7 @@ $current = basename($_SERVER['REQUEST_URI']);
 
             <?php $nav = navActive('employees', $current); ?>
             <li>
-                <a href="/employees" class="<?= $nav['class']; ?>">
+                <a href="/admin/employees" class="<?= $nav['class']; ?>">
                     <i class="fas fa-users"></i>
                     <span>الموظفين</span>
                     <?= $nav['pill']; ?>
@@ -53,7 +53,7 @@ $current = basename($_SERVER['REQUEST_URI']);
 
             <?php $nav = navActive('attendance_report', $current); ?>
             <li>
-                <a href="/attendance_report" class="<?= $nav['class']; ?>">
+                <a href="/admin/attendance_report" class="<?= $nav['class']; ?>">
                     <i class="fas fa-chart-line"></i>
                     <span>التقارير</span>
                     <?= $nav['pill']; ?>
@@ -62,7 +62,7 @@ $current = basename($_SERVER['REQUEST_URI']);
 
             <?php $nav = navActive('holidays', $current); ?>
             <li>
-                <a href="/holidays" class="<?= $nav['class']; ?>">
+                <a href="/admin/holidays" class="<?= $nav['class']; ?>">
                     <i class="fas fa-umbrella-beach"></i>
                     <span>الإجازات</span>
                     <?= $nav['pill']; ?>
@@ -71,7 +71,7 @@ $current = basename($_SERVER['REQUEST_URI']);
 
             <?php $nav = navActive('settings', $current); ?>
             <li>
-                <a href="/settings" class="<?= $nav['class']; ?>">
+                <a href="/admin/settings" class="<?= $nav['class']; ?>">
                     <i class="fas fa-cog"></i>
                     <span>الإعدادات</span>
                     <?= $nav['pill']; ?>
@@ -120,6 +120,7 @@ $current = basename($_SERVER['REQUEST_URI']);
 
     </ul>
 
+    <?php if($_SESSION['role'] == 'employee'): ?>
     <!-- 🔻 المستخدم (Dropdown) -->
     <div class="sidebar-user" onclick="toggleUserMenu()">
         <div class="avatar">
@@ -133,7 +134,7 @@ $current = basename($_SERVER['REQUEST_URI']);
 
         <i class="fas fa-chevron-up"></i>
     </div>
-
+    <?php endif; ?>
     <!-- 🔻 Dropdown -->
     <div class="user-dropdown" id="userDropdown">
         <a href="/employee/profile"><i class="fas fa-user"></i> الملف الشخصي</a>

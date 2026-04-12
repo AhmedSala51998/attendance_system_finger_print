@@ -86,7 +86,7 @@ include "layout/header.php";
                     <?php if($is_on_break): ?>
                         <!-- ☕ حالة البريك -->
                         <div style="display: inline-flex; align-items: center; gap: 12px; background: #fff7ed; color: #c2410c; padding: 12px 28px; border-radius: 100px; font-weight: 800; font-size: 15px; border: 1px solid #fed7aa;">
-                            <span class="status-pulse"></span>
+                            <span class="status-pulse break"></span>
                             <i class="fas fa-coffee"></i> أنت في استراحة الآن
                         </div>
 

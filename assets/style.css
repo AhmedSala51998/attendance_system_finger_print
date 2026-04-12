@@ -20,17 +20,6 @@
     font-family: 'Cairo', sans-serif;
 }
 
-body {
-    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-    color: var(--dark);
-
-    /* ❌ امسح دول */
-    display: block;
-}
-
 /* Background animated CSS shapes */
 .bg-shape {
     position: absolute;

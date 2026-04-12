@@ -127,7 +127,7 @@ $current = basename($_SERVER['REQUEST_URI']);
         </div>
         <div class="user-info">
             <strong><?php echo $_SESSION['employee_name']; ?></strong>
-            <span><?php echo $_SESSION['role'] == 'admin' ? 'مدير النظام' : 'موظف'; ?></span>
+            <span><?php echo $_SESSION['role'] == 'admin' ? '' : 'موظف'; ?></span>
         </div>
         <i class="fas fa-chevron-up"></i>
     </div>

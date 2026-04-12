@@ -33,7 +33,7 @@ $current = basename($_SERVER['REQUEST_URI']);
 
         <?php if($_SESSION['role'] == 'admin'): ?>
 
-            <?php $nav = navActive('dashboard', $current); ?>
+            <?php $nav = navActive('index', $current); ?>
             <li>
                 <a href="/index" class="<?= $nav['class']; ?>">
                     <i class="fas fa-home"></i>

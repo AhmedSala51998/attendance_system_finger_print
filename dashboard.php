@@ -82,10 +82,22 @@ include "layout/header.php";
             <!-- عرض أزرار الحضور والبريك -->
             <div id="status-controller" style="margin-bottom: 35px;">
                 <?php if($status == 'checked_in'): ?>
-                    <div style="display: inline-flex; align-items: center; gap: 12px; background: #f0fdf4; color: #15803d; padding: 12px 28px; border-radius: 100px; font-weight: 800; font-size: 15px; border: 1px solid #bbf7d0;">
-                        <span class="status-pulse"></span>
-                        <i class="fas fa-briefcase"></i> نظام الدوام نشط حالياً
-                    </div>
+
+                    <?php if($is_on_break): ?>
+                        <!-- ☕ حالة البريك -->
+                        <div style="display: inline-flex; align-items: center; gap: 12px; background: #fff7ed; color: #c2410c; padding: 12px 28px; border-radius: 100px; font-weight: 800; font-size: 15px; border: 1px solid #fed7aa;">
+                            <span class="status-pulse"></span>
+                            <i class="fas fa-coffee"></i> أنت في استراحة الآن
+                        </div>
+
+                    <?php else: ?>
+                        <!-- 💼 حالة العمل -->
+                        <div style="display: inline-flex; align-items: center; gap: 12px; background: #f0fdf4; color: #15803d; padding: 12px 28px; border-radius: 100px; font-weight: 800; font-size: 15px; border: 1px solid #bbf7d0;">
+                            <span class="status-pulse"></span>
+                            <i class="fas fa-briefcase"></i> نظام الدوام نشط حالياً
+                        </div>
+                    <?php endif; ?>
+
                 <?php else: ?>
                     <div style="display: inline-flex; align-items: center; gap: 12px; background: #f8fafc; color: #64748b; padding: 12px 28px; border-radius: 100px; font-weight: 800; font-size: 15px; border: 1px solid #e2e8f0;">
                         <i class="fas fa-power-off"></i> لم يتم تسجيل حضور اليوم

@@ -337,7 +337,7 @@ function confirmDeleteEmployee(id, role) {
     });
 }
 
-function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('collapsed');
-    document.body.classList.toggle('collapsed');
+function toggleUserMenu() {
+    const menu = document.getElementById('userDropdown');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 }

@@ -336,3 +336,8 @@ function confirmDeleteEmployee(id, role) {
         }
     });
 }
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+    document.body.classList.toggle('collapsed');
+}

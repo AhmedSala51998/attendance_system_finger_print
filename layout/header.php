@@ -18,3 +18,4 @@
     <link rel="stylesheet" href="<?php echo $path_prefix; ?>assets/style.css?v=<?php echo time(); ?>">
 </head>
 <body>
+    <?php include "sidebar.php"; ?>

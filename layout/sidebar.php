@@ -97,7 +97,7 @@
 
     <!-- 🔻 Dropdown -->
     <div class="user-dropdown" id="userDropdown">
-        <a href="profile"><i class="fas fa-user"></i> الملف الشخصي</a>
+        <a href="employee/profile"><i class="fas fa-user"></i> الملف الشخصي</a>
         <a onclick="confirmLogout()" onclick="confirmLogout()" style="color:#ef4444;cursor:pointer">
             <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
         </a>

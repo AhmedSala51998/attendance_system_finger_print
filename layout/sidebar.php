@@ -1,3 +1,9 @@
+<?php
+$current = basename($_SERVER['REQUEST_URI']);
+function isActive($page, $current){
+    return strpos($current, $page) !== false ? 'active' : '';
+}
+?>
 <div class="sidebar-pro" id="sidebar">
 
     <!-- 🔷 Logo (بصمة احترافية) -->
@@ -16,39 +22,39 @@
 
         <span class="menu-title">القائمة الرئيسية</span>
 
-        <li>
-            <a href="dashboard" class="active">
-                <i class="fas fa-home"></i>
-                <span>الرئيسية</span>
-                <div class="active-pill"></div>
-            </a>
-        </li>
-
         <?php if($_SESSION['role'] == 'admin'): ?>
 
             <li>
-                <a href="employees">
+                <a href="/index" class="<?php echo isActive('index', $current); ?>">
+                    <i class="fas fa-home"></i>
+                    <span>الرئيسية</span>
+                    <div class="active-pill"></div>
+                </a>
+            </li>
+
+            <li>
+                <a href="/employees" class="<?php echo isActive('employees', $current); ?>">
                     <i class="fas fa-users"></i>
                     <span>الموظفين</span>
                 </a>
             </li>
 
             <li>
-                <a href="attendance_report">
+                <a href="/attendance_report" class="<?php echo isActive('attendance_report', $current); ?>">
                     <i class="fas fa-chart-line"></i>
                     <span>التقارير</span>
                 </a>
             </li>
 
             <li>
-                <a href="holidays">
+                <a href="/holidays" class="<?php echo isActive('holidays', $current); ?>">
                     <i class="fas fa-umbrella-beach"></i>
                     <span>الإجازات</span>
                 </a>
             </li>
 
             <li>
-                <a href="settings">
+                <a href="/settings" class="<?php echo isActive('settings', $current); ?>">
                     <i class="fas fa-cog"></i>
                     <span>الإعدادات</span>
                 </a>
@@ -57,21 +63,29 @@
         <?php else: ?>
 
             <li>
-                <a href="employee/my_attendance">
+                <a href="/dashboard" class="<?php echo isActive('dashboard', $current); ?>">
+                    <i class="fas fa-home"></i>
+                    <span>الرئيسية</span>
+                    <div class="active-pill"></div>
+                </a>
+            </li>
+
+            <li>
+                <a href="/employee/my_attendance" class="<?php echo isActive('my_attendance', $current); ?>">
                     <i class="fas fa-calendar-alt"></i>
                     <span>سجلاتي</span>
                 </a>
             </li>
 
             <li>
-                <a href="employee/monthly_report">
+                <a href="/employee/monthly_report" class="<?php echo isActive('monthly_report', $current); ?>">
                     <i class="fas fa-file-alt"></i>
                     <span>التقرير الشهري</span>
                 </a>
             </li>
 
             <li>
-                <a href="employee/profile">
+                <a href="/employee/profile" class="<?php echo isActive('profile', $current); ?>">
                     <i class="fas fa-user"></i>
                     <span>ملفي الشخصي</span>
                 </a>
@@ -97,7 +111,7 @@
 
     <!-- 🔻 Dropdown -->
     <div class="user-dropdown" id="userDropdown">
-        <a href="employee/profile"><i class="fas fa-user"></i> الملف الشخصي</a>
+        <a href="/employee/profile"><i class="fas fa-user"></i> الملف الشخصي</a>
         <a onclick="confirmLogout()" onclick="confirmLogout()" style="color:#ef4444;cursor:pointer">
             <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
         </a>

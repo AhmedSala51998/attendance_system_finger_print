@@ -23,9 +23,6 @@
 body {
     background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
     overflow-x: hidden;
     color: var(--dark);
@@ -822,3 +819,6 @@ tr:hover {
     background: rgba(255,255,255,0.05);
 }
 
+.dashboard {
+    margin-right: 270px;
+}

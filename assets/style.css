@@ -820,9 +820,5 @@ tr:hover {
 }
 
 .dashboard {
-    width: calc(100% - 270px); 
-    margin-right: 270px !important; 
-    
-    display: flex;
-    justify-content: center;
+    margin-right: 550px !important;
 }

@@ -28,7 +28,7 @@ body {
     position: relative;
     overflow-x: hidden;
     color: var(--dark);
-    margin-right:200px !important;
+    margin-right:100px !important;
 }
 
 /* Background animated CSS shapes */

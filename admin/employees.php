@@ -6,6 +6,28 @@ if(!isset($_SESSION['employee_id']) || $_SESSION['role'] != 'admin'){
 include "../layout/header.php"; 
 ?>
 
+<?php if(isset($_GET['success']) && $_GET['success'] == 'deleted'): ?>
+<script>
+Swal.fire({
+    icon: 'success',
+    title: 'تم الحذف',
+    text: 'تم حذف الموظف بنجاح',
+    confirmButtonColor: '#10b981'
+});
+</script>
+<?php endif; ?>
+
+<?php if(isset($_GET['error']) && $_GET['error'] == 'admin'): ?>
+<script>
+Swal.fire({
+    icon: 'error',
+    title: 'غير مسموح',
+    text: 'لا يمكن حذف مدير النظام',
+    confirmButtonColor: '#ef4444'
+});
+</script>
+<?php endif; ?>
+
 <div class="dashboard" style="margin: 40px auto; max-width: 1100px;">
     
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; flex-wrap: wrap; gap: 15px;">

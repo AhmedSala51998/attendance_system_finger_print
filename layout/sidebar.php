@@ -1,58 +1,69 @@
-<div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        <h2>⏱️ Smart HR</h2>
-        <button class="toggle-btn" onclick="toggleSidebar()">
-            <i class="fas fa-bars"></i>
-        </button>
+<div class="sidebar-pro" id="sidebar">
+
+    <!-- 🔷 Logo -->
+    <div class="brand">
+        <div class="logo">SH</div>
+        <div class="brand-text">
+            <h3>Smart HR</h3>
+            <span>Attendance System</span>
+        </div>
     </div>
 
-    <ul class="sidebar-menu">
-        <?php if($_SESSION['role'] == 'admin'): ?>
-            
-            <li><a href="dashboard" class="active">
-                <i class="fas fa-home"></i> <span>الرئيسية</span>
-            </a></li>
+    <!-- 🔹 Menu -->
+    <ul class="menu">
 
-            <li><a href="employees">
-                <i class="fas fa-users"></i> <span>الموظفين</span>
-            </a></li>
+        <span class="menu-title">Main</span>
 
-            <li><a href="attendance_report">
-                <i class="fas fa-chart-line"></i> <span>التقارير</span>
-            </a></li>
-
-            <li><a href="holidays">
-                <i class="fas fa-umbrella-beach"></i> <span>الإجازات</span>
-            </a></li>
-
-            <li><a href="settings">
-                <i class="fas fa-cog"></i> <span>الإعدادات</span>
-            </a></li>
-
-        <?php else: ?>
-
-            <li><a href="index" class="active">
-                <i class="fas fa-home"></i> <span>الرئيسية</span>
-            </a></li>
-
-            <li><a href="employee/my_attendance">
-                <i class="fas fa-calendar-alt"></i> <span>سجلاتي</span>
-            </a></li>
-
-            <li><a href="employee/monthly_report">
-                <i class="fas fa-file-invoice"></i> <span>التقرير</span>
-            </a></li>
-
-            <li><a href="employee/profile">
-                <i class="fas fa-user"></i> <span>الملف الشخصي</span>
-            </a></li>
-
-        <?php endif; ?>
-
-        <li class="logout">
-            <a onclick="confirmLogout()">
-                <i class="fas fa-sign-out-alt"></i> <span>تسجيل الخروج</span>
+        <li>
+            <a href="dashboard" class="active">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+                <div class="active-pill"></div>
             </a>
         </li>
+
+        <li>
+            <a href="employees">
+                <i class="fas fa-users"></i>
+                <span>Employees</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="attendance_report">
+                <i class="fas fa-chart-line"></i>
+                <span>Reports</span>
+            </a>
+        </li>
+
+        <span class="menu-title">Management</span>
+
+        <li>
+            <a href="holidays">
+                <i class="fas fa-calendar"></i>
+                <span>Holidays</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+
     </ul>
+
+    <!-- 🔻 User -->
+    <div class="sidebar-user">
+        <div class="avatar">
+            <?php echo strtoupper(substr($_SESSION['employee_name'],0,1)); ?>
+        </div>
+        <div class="user-info">
+            <strong><?php echo $_SESSION['employee_name']; ?></strong>
+            <span>Admin</span>
+        </div>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+
 </div>

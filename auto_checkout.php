@@ -11,6 +11,8 @@ if(!defined('AUTO_CHECKOUT_RAN')){
     $res = $conn->query("
         SELECT * FROM attendance 
         WHERE check_out IS NULL
+        AND check_in IS NOT NULL
+        AND status != 'absent'
     ");
 
     while($row = $res->fetch_assoc()){

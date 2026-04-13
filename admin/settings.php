@@ -21,86 +21,87 @@ if (!$set) {
 }
 include "../layout/header.php";
 ?>
+<div class="main-content">
+    <div class="dashboard" style="margin: 40px auto; max-width: 900px;">
+        <?php echo $msg; ?>
 
-<div class="dashboard" style="margin: 40px auto; max-width: 900px;">
-    <?php echo $msg; ?>
+        <h2 style="margin-bottom: 25px;"><i class="fas fa-map-marked-alt" style="color:var(--primary)"></i> إعدادات الموقع
+            الجغرافي والشركة</h2>
 
-    <h2 style="margin-bottom: 25px;"><i class="fas fa-map-marked-alt" style="color:var(--primary)"></i> إعدادات الموقع
-        الجغرافي والشركة</h2>
+        <form method="POST"
+            style="background:rgba(255,255,255,0.7); backdrop-filter:blur(10px); padding:30px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.05);">
 
-    <form method="POST"
-        style="background:rgba(255,255,255,0.7); backdrop-filter:blur(10px); padding:30px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.05);">
+            <div style="position:relative; margin-bottom: 20px;">
+                <div style="display: flex; gap: 10px;">
+                    <div style="flex: 1; position: relative;">
+                        <i class="fas fa-compass" id="search-icon"
+                            style="position:absolute; right:15px; top:50%; transform:translateY(-50%); color:var(--primary); z-index:1000; transition: all 0.3s;"></i>
+                        <i class="fas fa-circle-notch fa-spin" id="search-loader"
+                            style="position:absolute; right:15px; top:50%; transform:translateY(-50%); color:var(--primary); z-index:1000; display:none;"></i>
 
-        <div style="position:relative; margin-bottom: 20px;">
-            <div style="display: flex; gap: 10px;">
-                <div style="flex: 1; position: relative;">
-                    <i class="fas fa-compass" id="search-icon"
-                        style="position:absolute; right:15px; top:50%; transform:translateY(-50%); color:var(--primary); z-index:1000; transition: all 0.3s;"></i>
-                    <i class="fas fa-circle-notch fa-spin" id="search-loader"
-                        style="position:absolute; right:15px; top:50%; transform:translateY(-50%); color:var(--primary); z-index:1000; display:none;"></i>
+                        <input type="text" id="map-search" placeholder="اكتب اسم الموقع هنا (مثال: ينبع شركة إيجاز)..."
+                            autocomplete="off"
+                            style="width:100%; padding:15px 45px 15px 15px; border:2px solid #E5E7EB; border-radius:12px; font-size:15px; background:white; outline:none; direction:rtl; transition: border-color 0.4s ease;"
+                            onkeypress="if(event.keyCode==13){event.preventDefault();}">
+                        <div id="search-results"
+                            style="position:absolute; width:100%; top:55px; background:white; border-radius:12px; box-shadow:0 15px 30px rgba(0,0,0,0.15); z-index:9999; display:none; max-height:200px; overflow-y:auto; border: 1px solid #eee;">
+                        </div>
+                    </div>
+                    <button type="button" onclick="getLocation()"
+                        style="width: auto; padding: 0 20px; background: #fff; color: var(--primary); border: 2px solid #E5E7EB; border-radius: 12px; font-weight: bold; cursor: pointer;">
+                        <i class="fas fa-crosshairs"></i> موقعي
+                    </button>
+                </div>
+                <p style="color: #6b7280; font-size: 13px; margin: 10px 5px 0 0;"><i class="fas fa-info-circle"></i> يمكنك
+                    كتابة اسم المكان، أو <b>لصق رابط جوجل مابس (Google Maps)</b> مباشرة هنا للحصول على الموقع بدقة.</p>
+            </div>
 
-                    <input type="text" id="map-search" placeholder="اكتب اسم الموقع هنا (مثال: ينبع شركة إيجاز)..."
-                        autocomplete="off"
-                        style="width:100%; padding:15px 45px 15px 15px; border:2px solid #E5E7EB; border-radius:12px; font-size:15px; background:white; outline:none; direction:rtl; transition: border-color 0.4s ease;"
-                        onkeypress="if(event.keyCode==13){event.preventDefault();}">
-                    <div id="search-results"
-                        style="position:absolute; width:100%; top:55px; background:white; border-radius:12px; box-shadow:0 15px 30px rgba(0,0,0,0.15); z-index:9999; display:none; max-height:200px; overflow-y:auto; border: 1px solid #eee;">
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+            <div id="map"
+                style="height: 450px; border-radius: 15px; margin-bottom: 20px; border:2px solid #E5E7EB; z-index:1;"></div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
+                <div class="input-group">
+                    <label>خط العرض (Lat)</label>
+                    <div style="position:relative;">
+                        <i class="fas fa-map-marker-alt"
+                            style="position:absolute; right:15px; top:50%; transform:translateY(-50%); color:var(--primary);"></i>
+                        <input type="text" name="company_lat" id="lat-input" value="<?php echo $set['company_lat']; ?>"
+                            readonly style="background:#F9FAFB; padding-right: 45px; width: 100%;">
                     </div>
                 </div>
-                <button type="button" onclick="getLocation()"
-                    style="width: auto; padding: 0 20px; background: #fff; color: var(--primary); border: 2px solid #E5E7EB; border-radius: 12px; font-weight: bold; cursor: pointer;">
-                    <i class="fas fa-crosshairs"></i> موقعي
-                </button>
-            </div>
-            <p style="color: #6b7280; font-size: 13px; margin: 10px 5px 0 0;"><i class="fas fa-info-circle"></i> يمكنك
-                كتابة اسم المكان، أو <b>لصق رابط جوجل مابس (Google Maps)</b> مباشرة هنا للحصول على الموقع بدقة.</p>
-        </div>
-
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-        <div id="map"
-            style="height: 450px; border-radius: 15px; margin-bottom: 20px; border:2px solid #E5E7EB; z-index:1;"></div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
-            <div class="input-group">
-                <label>خط العرض (Lat)</label>
-                <div style="position:relative;">
-                    <i class="fas fa-map-marker-alt"
-                        style="position:absolute; right:15px; top:50%; transform:translateY(-50%); color:var(--primary);"></i>
-                    <input type="text" name="company_lat" id="lat-input" value="<?php echo $set['company_lat']; ?>"
-                        readonly style="background:#F9FAFB; padding-right: 45px; width: 100%;">
+                <div class="input-group">
+                    <label>خط الطول (Lng)</label>
+                    <div style="position:relative;">
+                        <i class="fas fa-map-marker-alt"
+                            style="position:absolute; right:15px; top:50%; transform:translateY(-50%); color:var(--primary);"></i>
+                        <input type="text" name="company_lng" id="lng-input" value="<?php echo $set['company_lng']; ?>"
+                            readonly style="background:#F9FAFB; padding-right: 45px; width: 100%;">
+                    </div>
                 </div>
             </div>
+
             <div class="input-group">
-                <label>خط الطول (Lng)</label>
+                <label>المسافة المسموحة (بالمتر)</label>
                 <div style="position:relative;">
-                    <i class="fas fa-map-marker-alt"
+                    <i class="fas fa-ruler-combined"
                         style="position:absolute; right:15px; top:50%; transform:translateY(-50%); color:var(--primary);"></i>
-                    <input type="text" name="company_lng" id="lng-input" value="<?php echo $set['company_lng']; ?>"
-                        readonly style="background:#F9FAFB; padding-right: 45px; width: 100%;">
+                    <input type="number" name="allowed_distance" value="<?php echo $set['allowed_distance']; ?>" required
+                        style="padding-right: 45px; width: 100%;">
                 </div>
             </div>
+
+            <button type="submit" name="update" class="btn">
+                <i class="fas fa-check-circle" style="margin-left: 8px;"></i> اعتمد الإعدادات الجديدة
+            </button>
+        </form>
+
+        <div style="margin-top:20px; text-align:center;">
+            <a href="index" style="color:var(--primary); text-decoration:none; font-weight:600;">
+                <i class="fas fa-arrow-right"></i> عودة للوحة تحكم الإدارة
+            </a>
         </div>
-
-        <div class="input-group">
-            <label>المسافة المسموحة (بالمتر)</label>
-            <div style="position:relative;">
-                <i class="fas fa-ruler-combined"
-                    style="position:absolute; right:15px; top:50%; transform:translateY(-50%); color:var(--primary);"></i>
-                <input type="number" name="allowed_distance" value="<?php echo $set['allowed_distance']; ?>" required
-                    style="padding-right: 45px; width: 100%;">
-            </div>
-        </div>
-
-        <button type="submit" name="update" class="btn">
-            <i class="fas fa-check-circle" style="margin-left: 8px;"></i> اعتمد الإعدادات الجديدة
-        </button>
-    </form>
-
-    <div style="margin-top:20px; text-align:center;">
-        <a href="index" style="color:var(--primary); text-decoration:none; font-weight:600;">
-            <i class="fas fa-arrow-right"></i> عودة للوحة تحكم الإدارة
-        </a>
     </div>
 </div>
 

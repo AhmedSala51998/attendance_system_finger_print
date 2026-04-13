@@ -35,7 +35,8 @@ if (isset($_GET['edit'])) {
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
     $conn->query("DELETE FROM holidays WHERE id = $id");
-    header("Location: holidays.php"); exit();
+    header("Location: holidays.php?deleted=1");
+    exit();
 }
 
 $holidays = $conn->query("SELECT * FROM holidays ORDER BY date DESC");

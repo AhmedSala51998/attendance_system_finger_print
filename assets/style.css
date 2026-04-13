@@ -863,16 +863,13 @@ button:hover,
     box-shadow: 0 10px 25px rgba(249, 115, 22, 0.35);
 }
 .sidebar-pro {
-    background: linear-gradient(180deg, #EA580C, #7C2D12);
+    background: linear-gradient(180deg, #9A3412, #431407);
 }
 .logo {
-    background: linear-gradient(135deg, #F97316, #FDBA74);
+    background: linear-gradient(135deg,#F97316,#FB923C);
 }
 .menu a.active {
     background: linear-gradient(135deg, #F97316, #FB923C);
     color: #fff;
     box-shadow: 0 10px 25px rgba(249, 115, 22, 0.35);
-}
-.menu a.active {
-    background: linear-gradient(135deg, #F97316, #FB923C);
 }

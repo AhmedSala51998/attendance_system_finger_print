@@ -40,31 +40,12 @@ include "layout/header.php";
     <div class="dashboard" style="margin: 40px auto; max-width: 900px;">
         
         <!-- 🏢 Header Section (The Digital Core) -->
-       <div class="user-header" style="
-                        background: linear-gradient(135deg, #F97316, #FB923C);
-                        color: white;
-                        padding: 45px;
-                        border-radius: 35px;
-                        box-shadow: 0 25px 50px -12px rgba(249, 115, 22, 0.45);
-                        margin-bottom: 40px;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        position: relative;
-                        overflow: hidden;
-                    ">
+        <div class="user-header" style="background: linear-gradient(135deg, #4f46e5, #9333ea); color: white; padding: 45px; border-radius: 35px; box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.4); margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden;">
+            <div style="z-index: 2;">
                 <p style="margin: 0; font-size: 16px; opacity: 0.85;">طاب يومك،</p>
                 <h1 style="margin: 5px 0 0 0; font-size: 32px; font-weight: 800;"><?php echo htmlspecialchars($_SESSION['employee_name'] ?? 'موظف'); ?></h1>
                 <div style="margin-top: 15px; display: flex; gap: 10px;">
-                    <span style="
-                            background: rgba(255,255,255,0.2);
-                            backdrop-filter: blur(8px);
-                            padding: 6px 18px;
-                            border-radius: 50px;
-                            font-size: 13px;
-                            font-weight: 600;
-                            border: 1px solid rgba(255,255,255,0.35);
-                        ">
+                    <span style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px); padding: 6px 18px; border-radius: 50px; font-size: 13px; font-weight: 600; border: 1px solid rgba(255,255,255,0.25);">
                         <i class="fas fa-clock"></i> <?php echo $shift['is_holiday'] ? 'يوم إجازة' : $shift['display']; ?>
                     </span>
                 </div>

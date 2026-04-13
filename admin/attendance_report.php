@@ -193,7 +193,15 @@ include "../layout/header.php";
                 <tr style="border-bottom: 1px solid #f8fafc;">
                     <td style="padding:12px;"><strong><?php echo htmlspecialchars($row['name']); ?></strong></td>
                     <td style="padding:12px; text-align:center;"><?php echo $row['date']; ?></td>
-                    <td style="padding:12px; text-align:center; font-weight:bold;"><?php echo date('h:i A', strtotime($row['check_in'])); ?></td>
+                    <td style="padding:12px; text-align:center; font-weight:bold;">
+                        <?php 
+                            if($row['status'] == 'absent' || empty($row['check_in'])){
+                                echo '—';
+                            }else{
+                                echo date('h:i A', strtotime($row['check_in']));
+                            }
+                        ?>
+                    </td>
                     <td style="padding:12px; text-align:center; font-weight:bold;"><?php echo ($row['check_out']) ? date('h:i A', strtotime($row['check_out'])) : '—'; ?></td>
                     <td style="padding:12px; text-align:center;">
                         <?php 

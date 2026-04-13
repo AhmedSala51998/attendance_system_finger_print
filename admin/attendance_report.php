@@ -88,141 +88,143 @@ include "../layout/header.php";
     .late-card-trigger:hover { transform: translateY(-3px); background: #fef3c7 !important; border: 1px solid #f59e0b !important; cursor: pointer; }
 </style>
 
-<div class="dashboard" style="margin: 30px auto; max-width: 1400px;">
+<div class="main-content">
+    <div class="dashboard" style="margin: 30px auto; max-width: 1400px;">
 
-    <!-- 📄 ترويسة الطباعة (تظهر في PDF فقط) -->
-    <div class="print-header">
-        <h1 style="margin:0; color:#4F46E5;">تقرير الحضور والانصراف الرسمي</h1>
-        <p style="margin:5px 0; color:#64748b;">سجل الموظفين للفترة المحددة</p>
-    </div>
-    
-    <!-- Title & Navigation -->
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:20px;" class="no-print">
-        <div style="display:flex; align-items:center; gap:15px;">
-            <a href="index" style="width:40px; height:40px; background:white; border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--primary); box-shadow:0 4px 6px rgba(0,0,0,0.05); text-decoration:none; transition:0.2s;" onmouseover="this.style.background='var(--primary)'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='var(--primary)';">
-                <i class="fas fa-arrow-right"></i>
-            </a>
-            <h2 style="margin:0;"><i class="fas fa-file-invoice" style="color:var(--primary)"></i> التقارير والرقابة التفصيلية</h2>
+        <!-- 📄 ترويسة الطباعة (تظهر في PDF فقط) -->
+        <div class="print-header">
+            <h1 style="margin:0; color:#4F46E5;">تقرير الحضور والانصراف الرسمي</h1>
+            <p style="margin:5px 0; color:#64748b;">سجل الموظفين للفترة المحددة</p>
         </div>
         
-        <div style="display:flex; gap:12px; align-items:center;">
-             <form method="GET" style="display:flex; gap:8px; background:white; padding:8px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
-                <select name="employee_id" onchange="this.form.submit()" style="padding:4px 10px; border-radius:8px; border:1px solid #e2e8f0; font-family:'Cairo';">
-                    <option value="0">--- الموظفين ---</option>
-                    <?php while($e = $all_emps->fetch_assoc()): ?>
-                        <option value="<?php echo $e['id']; ?>" <?php echo ($e['id'] == $selected_emp) ? 'selected' : ''; ?>><?php echo $e['name']; ?></option>
-                    <?php endwhile; ?>
-                </select>
-                <select name="month" onchange="this.form.submit()" style="padding:4px 10px; border-radius:8px; border:1px solid #e2e8f0; font-family:'Cairo';">
-                    <?php foreach($arabic_months as $num => $name): ?>
-                        <option value="<?php echo $num; ?>" <?php echo ($num == $selected_month) ? 'selected' : ''; ?>><?php echo $name; ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <select name="year" onchange="this.form.submit()" style="padding:4px 10px; border-radius:8px; border:1px solid #e2e8f0; font-family:'Cairo';">
-                    <?php for($y = date('Y'); $y >= 2024; $y--): ?>
-                        <option value="<?php echo $y; ?>" <?php echo ($y == $selected_year) ? 'selected' : ''; ?>><?php echo $y; ?></option>
-                    <?php endfor; ?>
-                </select>
-            </form>
-            <a href="export_excel?month=<?php echo $selected_month; ?>&year=<?php echo $selected_year; ?>&employee_id=<?php echo $selected_emp; ?>" class="btn" style="background:#10B981; width:auto; padding:8px 15px;">Excel</a>
-            <button onclick="window.print()" class="btn" style="background:#EF4444; width:auto; padding:8px 15px;">PDF</button>
+        <!-- Title & Navigation -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:20px;" class="no-print">
+            <div style="display:flex; align-items:center; gap:15px;">
+                <a href="index" style="width:40px; height:40px; background:white; border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--primary); box-shadow:0 4px 6px rgba(0,0,0,0.05); text-decoration:none; transition:0.2s;" onmouseover="this.style.background='var(--primary)'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='var(--primary)';">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <h2 style="margin:0;"><i class="fas fa-file-invoice" style="color:var(--primary)"></i> التقارير والرقابة التفصيلية</h2>
+            </div>
+            
+            <div style="display:flex; gap:12px; align-items:center;">
+                <form method="GET" style="display:flex; gap:8px; background:white; padding:8px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+                    <select name="employee_id" onchange="this.form.submit()" style="padding:4px 10px; border-radius:8px; border:1px solid #e2e8f0; font-family:'Cairo';">
+                        <option value="0">--- الموظفين ---</option>
+                        <?php while($e = $all_emps->fetch_assoc()): ?>
+                            <option value="<?php echo $e['id']; ?>" <?php echo ($e['id'] == $selected_emp) ? 'selected' : ''; ?>><?php echo $e['name']; ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                    <select name="month" onchange="this.form.submit()" style="padding:4px 10px; border-radius:8px; border:1px solid #e2e8f0; font-family:'Cairo';">
+                        <?php foreach($arabic_months as $num => $name): ?>
+                            <option value="<?php echo $num; ?>" <?php echo ($num == $selected_month) ? 'selected' : ''; ?>><?php echo $name; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <select name="year" onchange="this.form.submit()" style="padding:4px 10px; border-radius:8px; border:1px solid #e2e8f0; font-family:'Cairo';">
+                        <?php for($y = date('Y'); $y >= 2024; $y--): ?>
+                            <option value="<?php echo $y; ?>" <?php echo ($y == $selected_year) ? 'selected' : ''; ?>><?php echo $y; ?></option>
+                        <?php endfor; ?>
+                    </select>
+                </form>
+                <a href="export_excel?month=<?php echo $selected_month; ?>&year=<?php echo $selected_year; ?>&employee_id=<?php echo $selected_emp; ?>" class="btn" style="background:#10B981; width:auto; padding:8px 15px;">Excel</a>
+                <button onclick="window.print()" class="btn" style="background:#EF4444; width:auto; padding:8px 15px;">PDF</button>
+            </div>
         </div>
-    </div>
 
-    <!-- Stats Cards (no-print) -->
-    <div class="stats-container no-print" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:20px; margin-bottom:30px;">
-        <?php if($stats_result->num_rows > 0): ?>
-            <?php while($s = $stats_result->fetch_assoc()): ?>
-                <?php 
-                // جلب تفاصيل التأخير لكل الموظفين لضمه للكارت
-                $days_sql = "SELECT date, late_minutes FROM attendance WHERE employee_id={$s['id']} AND status='late' AND MONTH(date)='$selected_month' AND YEAR(date)='$selected_year' ORDER BY date ASC";
-                $days_res = $conn->query($days_sql);
-                $late_days_json = [];
-                while($d = $days_res->fetch_assoc()){ $late_days_json[] = $d; }
-                $json_data = json_encode($late_days_json);
-                ?>
-                <div class="glass-panel" style="padding:15px; border-radius:20px; border-top: 3px solid var(--primary);">
-                    <h4 style="margin:0 0 10px 0; font-size:15px;"><?php echo htmlspecialchars($s['name']); ?></h4>
-                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
-                        <div style="background:#f0fdf4; padding:8px; border-radius:10px; text-align:center;">
-                            <div style="font-weight:bold; color:#16a34a;"><?php echo $s['present_days']; ?></div>
-                            <div style="font-size:9px;">منتظم</div>
-                        </div>
-                        <!-- كارت التأخير التفاعلي -->
-                        <div onclick='showLateDetails(<?php echo $json_data; ?>, "<?php echo $s['name']; ?>")' 
-                             class="late-card-trigger" style="background:#fffbeb; padding:8px; border-radius:10px; text-align:center; transition:0.2s; border:1px solid transparent;">
-                            <div style="font-weight:bold; color:#d97706;"><?php echo $s['late_days']; ?></div>
-                            <div style="font-size:9px;">تأخير <i class="fas fa-external-link-alt" style="font-size:7px;"></i></div>
-                        </div>
-                        <div style="background:#fef2f2; padding:8px; border-radius:10px; text-align:center;">
-                            <div style="font-weight:bold; color:#ef4444;"><?php echo $s['absent_days']; ?></div>
-                            <div style="font-size:9px;">غياب</div>
+        <!-- Stats Cards (no-print) -->
+        <div class="stats-container no-print" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:20px; margin-bottom:30px;">
+            <?php if($stats_result->num_rows > 0): ?>
+                <?php while($s = $stats_result->fetch_assoc()): ?>
+                    <?php 
+                    // جلب تفاصيل التأخير لكل الموظفين لضمه للكارت
+                    $days_sql = "SELECT date, late_minutes FROM attendance WHERE employee_id={$s['id']} AND status='late' AND MONTH(date)='$selected_month' AND YEAR(date)='$selected_year' ORDER BY date ASC";
+                    $days_res = $conn->query($days_sql);
+                    $late_days_json = [];
+                    while($d = $days_res->fetch_assoc()){ $late_days_json[] = $d; }
+                    $json_data = json_encode($late_days_json);
+                    ?>
+                    <div class="glass-panel" style="padding:15px; border-radius:20px; border-top: 3px solid var(--primary);">
+                        <h4 style="margin:0 0 10px 0; font-size:15px;"><?php echo htmlspecialchars($s['name']); ?></h4>
+                        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+                            <div style="background:#f0fdf4; padding:8px; border-radius:10px; text-align:center;">
+                                <div style="font-weight:bold; color:#16a34a;"><?php echo $s['present_days']; ?></div>
+                                <div style="font-size:9px;">منتظم</div>
+                            </div>
+                            <!-- كارت التأخير التفاعلي -->
+                            <div onclick='showLateDetails(<?php echo $json_data; ?>, "<?php echo $s['name']; ?>")' 
+                                class="late-card-trigger" style="background:#fffbeb; padding:8px; border-radius:10px; text-align:center; transition:0.2s; border:1px solid transparent;">
+                                <div style="font-weight:bold; color:#d97706;"><?php echo $s['late_days']; ?></div>
+                                <div style="font-size:9px;">تأخير <i class="fas fa-external-link-alt" style="font-size:7px;"></i></div>
+                            </div>
+                            <div style="background:#fef2f2; padding:8px; border-radius:10px; text-align:center;">
+                                <div style="font-weight:bold; color:#ef4444;"><?php echo $s['absent_days']; ?></div>
+                                <div style="font-size:9px;">غياب</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php endwhile; ?>
-        <?php endif; ?>
-    </div>
-
-    <!-- Details Table -->
-    <div class="table-wrapper" style="background:white; border-radius:15px; overflow-x:auto; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
-        <table style="width:100%; border-collapse:collapse; min-width:1200px;">
-            <thead style="background: #f8fafc; border-bottom: 2px solid #f1f5f9;">
-                <tr>
-                    <th style="padding:12px; text-align:right;">الموظف</th>
-                    <th style="padding:12px; text-align:center;">التاريخ</th>
-                    <th style="padding:12px; text-align:center;">وقت الحضور</th>
-                    <th style="padding:12px; text-align:center;">وقت الانصراف</th>
-                    <th style="padding:12px; text-align:center;">الحالة</th>
-                    <th style="padding:12px; text-align:center;">البريك (د)</th>
-                    <th style="padding:12px; text-align:center;">تأخير البريك</th>
-                    <th style="padding:12px; text-align:center;">الانقطاع</th>
-                    <th style="padding:12px; text-align:center;">صافي العمل</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $detail_res = $conn->query("
-                    SELECT a.*, e.name 
-                    FROM attendance a 
-                    JOIN employees e ON a.employee_id = e.id 
-                    $where_detail
-                    ORDER BY a.date DESC
-                ");
-                while($row = $detail_res->fetch_assoc()): ?>
-                <tr style="border-bottom: 1px solid #f8fafc;">
-                    <td style="padding:12px;"><strong><?php echo htmlspecialchars($row['name']); ?></strong></td>
-                    <td style="padding:12px; text-align:center;"><?php echo $row['date']; ?></td>
-                    <td style="padding:12px; text-align:center; font-weight:bold;">
-                        <?php 
-                            if($row['status'] == 'absent' || empty($row['check_in'])){
-                                echo '—';
-                            }else{
-                                echo date('h:i A', strtotime($row['check_in']));
-                            }
-                        ?>
-                    </td>
-                    <td style="padding:12px; text-align:center; font-weight:bold;"><?php echo ($row['check_out']) ? date('h:i A', strtotime($row['check_out'])) : '—'; ?></td>
-                    <td style="padding:12px; text-align:center;">
-                        <?php 
-                            if($row['status'] == 'present') echo '<span style="color:#16a34a; background:#f0fdf4; padding:3px 8px; border-radius:8px; font-size:11px; font-weight:bold;">منتظم</span>';
-                            elseif($row['status'] == 'late') echo '<span style="color:#d97706; background:#fffbeb; padding:3px 8px; border-radius:8px; font-size:11px; font-weight:bold;">متأخر ('.$row['late_minutes'].' د)</span>';
-                            else echo '<span style="color:#ef4444; background:#fef2f2; padding:3px 8px; border-radius:8px; font-size:11px; font-weight:bold;">غائب</span>';
-                        ?>
-                    </td>
-                    <td style="padding:12px; text-align:center;"><?php echo $row['break_minutes'] ?? 0; ?> د</td>
-                    <td style="padding:12px; text-align:center; color:#ef4444; font-weight:600;"><?php echo ($row['late_break_minutes'] > 0) ? $row['late_break_minutes'] . ' د' : '—'; ?></td>
-                    <td style="padding:12px; text-align:center; color:#ef4444;"><?php echo ($row['interrupted_minutes'] > 0) ? $row['interrupted_minutes'] . ' د' : '—'; ?></td>
-                    <td style="padding:12px; text-align:center;"><span style="font-weight:bold; color:var(--primary);"><?php echo formatWorkHours($row['work_hours']); ?></span></td>
-                </tr>
                 <?php endwhile; ?>
-            </tbody>
-        </table>
-    </div>
-    <!-- 📄 تذييل الطباعة (يظهر في PDF فقط) -->
-    <div class="print-footer">
-        <span>طُبع بتاريخ: <?php echo date('Y-m-d H:i'); ?></span>
-        <span style="float:left;">النظام الذكي لإدارة الحضور والانصراف - نسخة الإدارة</span>
+            <?php endif; ?>
+        </div>
+
+        <!-- Details Table -->
+        <div class="table-wrapper" style="background:white; border-radius:15px; overflow-x:auto; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
+            <table style="width:100%; border-collapse:collapse; min-width:1200px;">
+                <thead style="background: #f8fafc; border-bottom: 2px solid #f1f5f9;">
+                    <tr>
+                        <th style="padding:12px; text-align:right;">الموظف</th>
+                        <th style="padding:12px; text-align:center;">التاريخ</th>
+                        <th style="padding:12px; text-align:center;">وقت الحضور</th>
+                        <th style="padding:12px; text-align:center;">وقت الانصراف</th>
+                        <th style="padding:12px; text-align:center;">الحالة</th>
+                        <th style="padding:12px; text-align:center;">البريك (د)</th>
+                        <th style="padding:12px; text-align:center;">تأخير البريك</th>
+                        <th style="padding:12px; text-align:center;">الانقطاع</th>
+                        <th style="padding:12px; text-align:center;">صافي العمل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $detail_res = $conn->query("
+                        SELECT a.*, e.name 
+                        FROM attendance a 
+                        JOIN employees e ON a.employee_id = e.id 
+                        $where_detail
+                        ORDER BY a.date DESC
+                    ");
+                    while($row = $detail_res->fetch_assoc()): ?>
+                    <tr style="border-bottom: 1px solid #f8fafc;">
+                        <td style="padding:12px;"><strong><?php echo htmlspecialchars($row['name']); ?></strong></td>
+                        <td style="padding:12px; text-align:center;"><?php echo $row['date']; ?></td>
+                        <td style="padding:12px; text-align:center; font-weight:bold;">
+                            <?php 
+                                if($row['status'] == 'absent' || empty($row['check_in'])){
+                                    echo '—';
+                                }else{
+                                    echo date('h:i A', strtotime($row['check_in']));
+                                }
+                            ?>
+                        </td>
+                        <td style="padding:12px; text-align:center; font-weight:bold;"><?php echo ($row['check_out']) ? date('h:i A', strtotime($row['check_out'])) : '—'; ?></td>
+                        <td style="padding:12px; text-align:center;">
+                            <?php 
+                                if($row['status'] == 'present') echo '<span style="color:#16a34a; background:#f0fdf4; padding:3px 8px; border-radius:8px; font-size:11px; font-weight:bold;">منتظم</span>';
+                                elseif($row['status'] == 'late') echo '<span style="color:#d97706; background:#fffbeb; padding:3px 8px; border-radius:8px; font-size:11px; font-weight:bold;">متأخر ('.$row['late_minutes'].' د)</span>';
+                                else echo '<span style="color:#ef4444; background:#fef2f2; padding:3px 8px; border-radius:8px; font-size:11px; font-weight:bold;">غائب</span>';
+                            ?>
+                        </td>
+                        <td style="padding:12px; text-align:center;"><?php echo $row['break_minutes'] ?? 0; ?> د</td>
+                        <td style="padding:12px; text-align:center; color:#ef4444; font-weight:600;"><?php echo ($row['late_break_minutes'] > 0) ? $row['late_break_minutes'] . ' د' : '—'; ?></td>
+                        <td style="padding:12px; text-align:center; color:#ef4444;"><?php echo ($row['interrupted_minutes'] > 0) ? $row['interrupted_minutes'] . ' د' : '—'; ?></td>
+                        <td style="padding:12px; text-align:center;"><span style="font-weight:bold; color:var(--primary);"><?php echo formatWorkHours($row['work_hours']); ?></span></td>
+                    </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
+        <!-- 📄 تذييل الطباعة (يظهر في PDF فقط) -->
+        <div class="print-footer">
+            <span>طُبع بتاريخ: <?php echo date('Y-m-d H:i'); ?></span>
+            <span style="float:left;">النظام الذكي لإدارة الحضور والانصراف - نسخة الإدارة</span>
+        </div>
     </div>
 </div>
 

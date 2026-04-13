@@ -17,7 +17,7 @@ $current = basename($_SERVER['REQUEST_URI']);
 
     <div class="brand">
         <div class="logo">
-            <img src="/images/logo.png" alt="Logo">
+            <img src="/images/logo.jpeg" alt="Logo">
         </div>
         <div class="brand-text">
             <h3>نظام الحضور</h3>

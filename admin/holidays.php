@@ -7,6 +7,13 @@ if(!isset($_SESSION['employee_id']) || $_SESSION['role'] != 'admin'){
 $msg = "";
 $edit_holiday = null;
 
+$msg_deleted = false;
+
+if(isset($_SESSION['deleted'])) {
+    $msg_deleted = true;
+    unset($_SESSION['deleted']);
+}
+
 // 1. إضافة أو تحديث إجازة
 if (isset($_POST['save_holiday'])) {
     $date = $_POST['date'];
@@ -35,7 +42,8 @@ if (isset($_GET['edit'])) {
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
     $conn->query("DELETE FROM holidays WHERE id = $id");
-    header("Location: holidays.php?deleted=1");
+    $_SESSION['deleted'] = true;
+    header("Location: holidays.php");
     exit();
 }
 
@@ -43,7 +51,7 @@ $holidays = $conn->query("SELECT * FROM holidays ORDER BY date DESC");
 
 include "../layout/header.php"; 
 ?>
-<?php if(isset($_GET['deleted'])): ?>
+<?php if($msg_deleted): ?>
 <script>
 Swal.fire({
     title: 'تم الحذف!',

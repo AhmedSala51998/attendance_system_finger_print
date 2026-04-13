@@ -23,9 +23,7 @@
 body {
     background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    direction: rtl;
     position: relative;
     overflow-x: hidden;
     color: var(--dark);
@@ -822,3 +820,13 @@ tr:hover {
     background: rgba(255,255,255,0.05);
 }
 
+.main-content {
+    margin-right: 270px; /* نفس عرض السايد بار */
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+.dashboard {
+    width: 100%;
+    max-width: 1200px;
+}

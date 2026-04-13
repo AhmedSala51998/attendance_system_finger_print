@@ -86,6 +86,30 @@ include "../layout/header.php";
     /* إخفاء عناصر الطباعة في العرض العادي */
     .print-header, .print-footer { display: none; }
     .late-card-trigger:hover { transform: translateY(-3px); background: #fef3c7 !important; border: 1px solid #f59e0b !important; cursor: pointer; }
+    @media print {
+        /* اخفاء أي sidebar مهما كان اسمه */
+        .sidebar,
+        #sidebar,
+        .main-sidebar,
+        aside,
+        nav,
+        header,
+        footer {
+            display: none !important;
+        }
+
+        /* خلي المحتوى ياخد العرض كله */
+        .main-content,
+        .dashboard {
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        body {
+            overflow: visible !important;
+        }
+    }
 </style>
 
 <div class="main-content">

@@ -848,7 +848,7 @@ tr:hover {
 }
 
 .main-content {
-    margin-right: 270px; /* نفس عرض السايد بار */
+    margin-right: 270px; 
     padding: 30px;
     display: flex;
     justify-content: center;

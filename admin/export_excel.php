@@ -57,7 +57,15 @@ echo "\xEF\xBB\xBF"; // UTF-8 BOM
                         else echo 'غائب';
                     ?>
                 </td>
-                <td><?php echo date('h:i A', strtotime($row['check_in'])); ?></td>
+                <td>
+                    <?php 
+                        if($row['status'] == 'absent' || empty($row['check_in'])){
+                            echo '—';
+                        }else{
+                            echo date('h:i A', strtotime($row['check_in']));
+                        }
+                    ?>
+                </td>
                 <td><?php echo ($row['check_out']) ? date('h:i A', strtotime($row['check_out'])) : '—'; ?></td>
                 <td><?php echo $row['late_minutes']; ?></td>
                 <td><?php echo $row['break_minutes']; ?></td>

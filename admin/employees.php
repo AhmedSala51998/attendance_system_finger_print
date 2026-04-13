@@ -34,7 +34,15 @@ Swal.fire({
             <h2 style="margin:0; font-size: 28px;">
                 <i class="fas fa-users-cog" style="color:var(--primary); margin-left: 10px;"></i> إدارة شؤون الموظفين
             </h2>
-            <a href="add_employee" class="btn btn-success" style="width: auto; padding: 12px 25px; border-radius: 15px; background: linear-gradient(135deg, #10b981, #059669); border: none; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">
+            <a href="add_employee" class="btn btn-success" style="
+                width: auto;
+                padding: 12px 25px;
+                border-radius: 15px;
+                background: linear-gradient(135deg, #F97316, #FB923C);
+                border: none;
+                box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+                color: white;
+            ">
                 <i class="fas fa-user-plus"></i> إضافة موظف جديد
             </a>
         </div>
@@ -69,7 +77,15 @@ Swal.fire({
                                     <i class="fas fa-shield-alt" style="margin-left: 4px;"></i> مدير نظام
                                 </span>
                             <?php else: ?>
-                                <span style="background: #f1f5f9; color: #475569; padding: 5px 12px; border-radius: 10px; font-size: 12px; font-weight: 600;">
+                                <span style="
+                                    background: rgba(249, 115, 22, 0.12);
+                                    color: #F97316;
+                                    padding: 5px 12px;
+                                    border-radius: 10px;
+                                    font-size: 12px;
+                                    font-weight: 600;
+                                    border: 1px solid rgba(249, 115, 22, 0.25);
+                                ">
                                     موظف
                                 </span>
                             <?php endif; ?>

@@ -42,6 +42,16 @@ $holidays = $conn->query("SELECT * FROM holidays ORDER BY date DESC");
 
 include "../layout/header.php"; 
 ?>
+<?php if(isset($_GET['deleted'])): ?>
+<script>
+Swal.fire({
+    title: 'تم الحذف!',
+    text: 'تم حذف الإجازة بنجاح',
+    icon: 'success',
+    confirmButtonText: 'تمام'
+});
+</script>
+<?php endif; ?>
 <div class="main-content">
     <div class="dashboard" style="margin: 40px auto; max-width: 1000px;">
         

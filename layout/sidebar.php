@@ -15,10 +15,9 @@ $current = basename($_SERVER['REQUEST_URI']);
 ?>
 <div class="sidebar-pro" id="sidebar">
 
-    <!-- 🔷 Logo (بصمة احترافية) -->
     <div class="brand">
         <div class="logo">
-            <i class="fas fa-fingerprint"></i>
+            <img src="/images/logo.png" alt="Logo">
         </div>
         <div class="brand-text">
             <h3>نظام الحضور</h3>

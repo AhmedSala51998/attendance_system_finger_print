@@ -17,6 +17,10 @@ if(!defined('AUTO_CHECKOUT_RAN')){
 
     while($row = $res->fetch_assoc()){
 
+        if(empty($row['check_in']) || $row['status'] == 'absent'){
+            continue;
+        }
+
         $shift = getShiftDetails($conn, $row['employee_id'], $row['date']);
         if($shift['is_holiday']) continue;
 

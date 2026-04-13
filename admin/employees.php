@@ -65,7 +65,7 @@ Swal.fire({
                     <tr style="border-bottom: 1px solid rgba(0,0,0,0.03); transition: all 0.3s ease;" class="employee-row">
                         <td style="padding: 15px 20px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; border-radius: 12px; background: <?php echo $row['role']=='admin' ? 'linear-gradient(135deg, #f59e0b, #d97706)' : 'linear-gradient(135deg, #6366f1, #4f46e5)'; ?>; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;">
+                                <div style="width: 40px; height: 40px; border-radius: 12px; background: <?php echo $row['role']=='admin' ? 'linear-gradient(135deg, #f59e0b, #d97706)' : 'linear-gradient(135deg, #F97316, #FB923C)'; ?>; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;">
                                     <?php echo mb_substr($row['name'], 0, 1, 'UTF-8'); ?>
                                 </div>
                                 <span style="font-weight: 600; color: #334155;"><?php echo htmlspecialchars($row['name']); ?></span>

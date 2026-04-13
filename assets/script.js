@@ -350,7 +350,7 @@ function confirmDeleteHoliday(id) {
         cancelButtonText: 'إلغاء'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = '?delete?id=' + id;
+            window.location.href = 'holidays.php?delete&id=' + id;
         }
     });
 }

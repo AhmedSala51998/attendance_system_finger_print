@@ -873,3 +873,15 @@ button:hover,
     color: #fff;
     box-shadow: 0 10px 25px rgba(249, 115, 22, 0.35);
 }
+.avatar {
+    background: #F97316;
+    color: white;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
+}

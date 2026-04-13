@@ -117,7 +117,7 @@ include "../layout/header.php";
                                         <a href="?edit=<?php echo $h['id']; ?>" style="color:#3b82f6; background:rgba(59, 130, 246, 0.1); width:35px; height:35px; border-radius:10px; display:flex; align-items:center; justify-content:center; text-decoration:none;">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="?delete=<?php echo $h['id']; ?>" onclick="return confirm('هل أنت متأكد من حذف هذه الإجازة؟')" style="color:#ef4444; background:rgba(239, 68, 68, 0.1); width:35px; height:35px; border-radius:10px; display:flex; align-items:center; justify-content:center; text-decoration:none;">
+                                        <a onclick="confirmDeleteHoliday(<?php echo $h['id']; ?>)" style="color:#ef4444; background:rgba(239, 68, 68, 0.1); width:35px; height:35px; border-radius:10px; display:flex; align-items:center; justify-content:center; text-decoration:none;">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </div>

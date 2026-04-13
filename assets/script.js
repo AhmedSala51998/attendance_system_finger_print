@@ -337,6 +337,24 @@ function confirmDeleteEmployee(id, role) {
     });
 }
 
+
+function confirmDeleteHoliday(id) {
+
+    Swal.fire({
+        title: 'هل أنت متأكد؟',
+        text: 'لن تستطيع استرجاع هذه الإجازة بعد الحذف!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        confirmButtonText: 'نعم، احذف',
+        cancelButtonText: 'إلغاء'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '?delete?id=' + id;
+        }
+    });
+}
+
 function toggleUserMenu() {
     const menu = document.getElementById('userDropdown');
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';

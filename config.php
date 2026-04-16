@@ -107,11 +107,11 @@ function sendFCM($token, $title, $body, $data = []) {
         "message" => [
             "token" => $token,
             "data" => [
-                "title" => $title,
-                "body" => $body,
-                "url" => $data['url'] ?? "/",
-                "type" => $data['type'] ?? "general",
-                "permission_date" => $data['permission_date'] ?? ""
+                "title" => (string)$title,
+                "body" => (string)$body,
+                "url" => (string)($data['url'] ?? "/"),
+                "type" => (string)($data['type'] ?? "general"),
+                "permission_date" => (string)($data['permission_date'] ?? "")
             ]
         ]
     ];

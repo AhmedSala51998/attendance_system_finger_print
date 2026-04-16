@@ -12,19 +12,9 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(function(payload) {
-
-    console.log("DATA:", payload.data);
-
-    const title = payload.data.title;
-    const body  = payload.data.body;
-    const url   = payload.data.url || "/";
-
-    self.registration.showNotification(title, {
-        body: body,
-        icon: "/images/logo.png",
-        data: { url }
-    });
+messaging.onBackgroundMessage((payload) => {
+    alert("SW TRIGGERED"); // ⚠️ اختبار قوي
+    console.log(payload);
 });
 
 self.addEventListener("notificationclick", function(event) {

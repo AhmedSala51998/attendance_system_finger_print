@@ -14,18 +14,14 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(function(payload) {
 
-    const notification = payload.notification || {};
-    const data = payload.data || {};
+    const url = payload.data?.url || "/";
 
-    const title = notification.title || "إشعار جديد";
-    const body  = notification.body || "";
-
-    const url = data.url || "/";
-
-    self.registration.showNotification(title, {
-        body: body,
+    self.registration.showNotification(payload.notification.title, {
+        body: payload.notification.body,
         icon: "/images/logo.png",
-        data: { url }
+        data: {
+            url: url
+        }
     });
 });
 

@@ -179,8 +179,7 @@ if(isset($_POST['save_permission'])){
     // ❌ لو فيه أخطاء
     if (!empty($errors)) {
         $msg = implode("<br>", $errors);
-        return;
-    }
+    }else{
 
     // =========================
     // الحفظ
@@ -206,7 +205,7 @@ if(isset($_POST['save_permission'])){
         $stmt->execute();
 
         $msg = "تم إضافة الإذن بنجاح";
-    }
+    }}
 }
 
 // الموظفين

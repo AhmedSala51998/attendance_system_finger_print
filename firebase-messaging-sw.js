@@ -23,6 +23,7 @@ messaging.onBackgroundMessage(function(payload) {
             url: url
         }
     });
+    console.log(payload);
 });
 
 self.addEventListener("notificationclick", function(event) {

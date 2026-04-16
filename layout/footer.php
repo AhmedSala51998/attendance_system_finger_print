@@ -51,7 +51,7 @@ Notification.requestPermission().then(permission => {
 <script>
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/firebase-messaging-sw.js")
-    .then(() => console.log("SW Registered"));
+    .then(() => console.log("SW Registered"));console.log("SW Active");
 }
 </script>
 </body>

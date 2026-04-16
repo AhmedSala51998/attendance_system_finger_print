@@ -75,6 +75,36 @@ if(isset($_POST['add_permission'])){
                  $msg = "لا يمكن إنشاء إذن في يوم إجازة رسمية";
             }else{
 
+            // ✅ التحقق من مواعيد الشيفت
+            $shift = getShiftDetails($conn, $emp_id, $date);
+
+            // ❌ لو اليوم أصلاً إجازة
+            if($shift['is_holiday']){
+                $msg = "❌ هذا اليوم إجازة: " . $shift['reason'];
+            }
+
+            // ❌ لو خارج مواعيد الشيفت
+            elseif($from < $shift['start_time'] || $to > $shift['end_time']){
+                $msg = "❌ هذا الموعد خارج موعد الشيفت الخاص بك (" . $shift['display'] . ")";
+            }
+
+            // ❌ (اختياري 🔥) لو داخل وقت البريك
+            elseif(isset($shift['has_break']) && $shift['has_break']){
+                
+                $break_start = $shift['break_start'] ?? null;
+                $break_end   = $shift['break_end'] ?? null;
+
+                if($break_start && $break_end){
+                    if(
+                        ($from >= $break_start && $from < $break_end) ||
+                        ($to > $break_start && $to <= $break_end) ||
+                        ($from <= $break_start && $to >= $break_end)
+                    ){
+                        $msg = "❌ لا يمكن طلب إذن أثناء وقت البريك";
+                    }
+                }
+            }else{
+
             // ✅ الإدخال طبيعي
             $stmt = $conn->prepare("
                 INSERT INTO permissions 
@@ -127,7 +157,8 @@ if(isset($_POST['add_permission'])){
                 $msg = "✅ تم إرسال طلب الإذن بنجاح!";
             }
 
-         }
+         }}
+
         }
     }
 }

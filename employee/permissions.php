@@ -18,8 +18,8 @@ if(isset($_POST['add_permission'])){
     date_default_timezone_set('Asia/Riyadh'); // 🇸🇦 تايم زون السعودية
 
     $date = $_POST['date'];
-    $from = $_POST['from_time'];
-    $to   = $_POST['to_time'];
+    $from = date("H:i:s", strtotime($_POST['from_time']));
+    $to   = date("H:i:s", strtotime($_POST['to_time']));
     $reason = $_POST['reason'];
 
     $today = date('Y-m-d');
@@ -74,23 +74,29 @@ if(isset($_POST['add_permission'])){
             if ($holiday_count > 0) {
                  $msg = "لا يمكن إنشاء إذن في يوم إجازة رسمية";
             }else{
+                
+            // بعد التحقق من holidays مباشرة
 
             // ✅ التحقق من مواعيد الشيفت
             $shift = getShiftDetails($conn, $emp_id, $date);
 
-            // ❌ لو اليوم أصلاً إجازة
+            $hasError = false;
+
+            // ❌ لو اليوم إجازة
             if($shift['is_holiday']){
                 $msg = "❌ هذا اليوم إجازة: " . $shift['reason'];
+                $hasError = true;
             }
 
-            // ❌ لو خارج مواعيد الشيفت
+            // ❌ خارج الشيفت
             elseif($from < $shift['start_time'] || $to > $shift['end_time']){
-                $msg = "❌ هذا الموعد خارج موعد الشيفت الخاص بك (" . $shift['display'] . ")";
+                $msg = "❌ هذا الموعد خارج موعد الشيفت (" . $shift['display'] . ")";
+                $hasError = true;
             }
 
-            // ❌ (اختياري 🔥) لو داخل وقت البريك
+            // ❌ داخل البريك
             elseif(isset($shift['has_break']) && $shift['has_break']){
-                
+
                 $break_start = $shift['break_start'] ?? null;
                 $break_end   = $shift['break_end'] ?? null;
 
@@ -101,10 +107,11 @@ if(isset($_POST['add_permission'])){
                         ($from <= $break_start && $to >= $break_end)
                     ){
                         $msg = "❌ لا يمكن طلب إذن أثناء وقت البريك";
+                        $hasError = true;
                     }
                 }
-            }else{
-
+            }
+            if(!$hasError){ 
             // ✅ الإدخال طبيعي
             $stmt = $conn->prepare("
                 INSERT INTO permissions 
@@ -158,7 +165,6 @@ if(isset($_POST['add_permission'])){
             }
 
          }}
-
         }
     }
 }

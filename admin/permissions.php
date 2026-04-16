@@ -75,8 +75,8 @@ if(isset($_POST['save_permission'])){
 
     $employee_id = (int) $_POST['employee_id'];
     $date        = $_POST['date'];
-    $from        = $_POST['from_time'];
-    $to          = $_POST['to_time'];
+    $from = date("H:i:s", strtotime($_POST['from_time']));
+    $to   = date("H:i:s", strtotime($_POST['to_time']));
     $status      = $_POST['status'];
     $id          = $_POST['permission_id'] ?? 0;
 

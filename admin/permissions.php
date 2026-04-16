@@ -22,14 +22,32 @@ if(isset($_GET['approve'])){
     // تحديث الحالة
     $conn->query("UPDATE permissions SET status='approved' WHERE id=$id");
 
-    // 🔔 إرسال إشعار للموظف
+    // جلب بيانات الموظف
     $perm = $conn->query("SELECT employee_id FROM permissions WHERE id=$id")->fetch_assoc();
     $emp_id = $perm['employee_id'];
 
+    $emp = $conn->query("SELECT name, fcm_token FROM employees WHERE id=$emp_id")->fetch_assoc();
+    $token = $emp['fcm_token'] ?? null;
+
+    // إشعار
+    $title = "تم قبول الإذن";
+    $body  = "تمت الموافقة على طلب الإذن الخاص بك";
+
     $conn->query("
         INSERT INTO notifications (user_id, title, `desc`, is_read)
-        VALUES ($emp_id, 'تم قبول الإذن', 'تمت الموافقة على إذن الساعات الخاص بك', 'unread')
+        VALUES ($emp_id, '$title', '$body', 'unread')
     ");
+
+    // FCM
+    $data = [
+        "type" => "permission",
+        "status" => "approved",
+        "url" => "/employee/notifications"
+    ];
+
+    if($token){
+        sendFCM($token, $title, $body, $data);
+    }
 
     header("Location: permissions.php");
     exit();
@@ -39,16 +57,35 @@ if(isset($_GET['approve'])){
 if(isset($_GET['reject'])){
     $id = intval($_GET['reject']);
 
+    // تحديث الحالة
     $conn->query("UPDATE permissions SET status='rejected' WHERE id=$id");
 
-    // 🔔 إشعار
+    // جلب بيانات الموظف
     $perm = $conn->query("SELECT employee_id FROM permissions WHERE id=$id")->fetch_assoc();
     $emp_id = $perm['employee_id'];
 
+    $emp = $conn->query("SELECT name, fcm_token FROM employees WHERE id=$emp_id")->fetch_assoc();
+    $token = $emp['fcm_token'] ?? null;
+
+    // إشعار
+    $title = "تم رفض الإذن";
+    $body  = "تم رفض طلب الإذن الخاص بك";
+
     $conn->query("
         INSERT INTO notifications (user_id, title, `desc`, is_read)
-        VALUES ($emp_id, 'تم رفض الإذن', 'تم رفض إذن الساعات الخاص بك', 'unread')
+        VALUES ($emp_id, '$title', '$body', 'unread')
     ");
+
+    // FCM
+    $data = [
+        "type" => "permission",
+        "status" => "rejected",
+        "url" => "/employee/notifications"
+    ];
+
+    if($token){
+        sendFCM($token, $title, $body, $data);
+    }
 
     header("Location: permissions.php");
     exit();
@@ -205,7 +242,48 @@ if(isset($_POST['save_permission'])){
         $stmt->execute();
 
         $msg = "تم إضافة الإذن بنجاح";
-    }}
+    }
+    // =========================
+    // 🔔 جلب بيانات الموظف + التوكن
+    // =========================
+    $emp = $conn->query("SELECT name, fcm_token FROM employees WHERE id = $employee_id");
+    $empData = $emp->fetch_assoc();
+
+    $employee_name = $empData['name'];
+    $token = $empData['fcm_token'] ?? null;
+
+    // =========================
+    // 🔔 تجهيز بيانات الإشعار
+    // =========================
+    $title = "تم اعتماد إذن";
+    $body  = "تم إضافة/تحديث إذن لك بتاريخ {$date} من {$from} إلى {$to}";
+
+    // حفظ في جدول notifications (للموظف)
+    $stmt_notif = $conn->prepare("
+        INSERT INTO notifications (user_id, title, `desc`, is_read)
+        VALUES (?, ?, ?, 'unread')
+    ");
+
+    $stmt_notif->bind_param("iss", $employee_id, $title, $body);
+    $stmt_notif->execute();
+
+    // =========================
+    // 🔥 إرسال FCM
+    // =========================
+    $url = "/employee/notifications";
+
+    $data = [
+        "type" => "permission",
+        "permission_date" => $date,
+        "url" => $url,
+        "title" => $title,
+        "body" => $body
+    ];
+
+    if ($token) {
+        sendFCM($token, $title, $body, $data);
+    }
+ }
 }
 
 // الموظفين

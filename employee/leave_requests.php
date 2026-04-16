@@ -94,10 +94,16 @@ if(isset($_POST['add_leave'])){
         $employee_name = $_SESSION['employee_name'];
 
         // 🔔 إشعار للأدمن
-        $admins = $conn->query("SELECT id FROM employees WHERE role='admin'");
+        $admins = $conn->query("
+                SELECT id, fcm_token 
+                FROM employees 
+                WHERE role = 'admin' 
+                AND fcm_token IS NOT NULL
+            ");
 
         while($admin = $admins->fetch_assoc()){
             $admin_id = $admin['id'];
+            $token = $admin['fcm_token'];
 
             $title = "طلب إجازة جديد";
             $desc  = "الموظف {$employee_name} طلب إجازة من {$from_date} إلى {$to_date}";
@@ -108,6 +114,19 @@ if(isset($_POST['add_leave'])){
             ");
             $stmt_notif->bind_param("iss", $admin_id, $title, $desc);
             $stmt_notif->execute();
+
+            $date =  $from_date . '-' . $to_date;
+            $url = "/admin/notifications";
+            $data = [
+                "type" => "Leave Request",
+                "request_date" => $date,
+                "url" => $url
+            ];
+
+            // 3️⃣ إرسال FCM
+            if($token){
+                sendFCM($token, $title, $desc, $data);
+            }
         }
 
         $msg = "تم إرسال طلب الإجازة بنجاح!";

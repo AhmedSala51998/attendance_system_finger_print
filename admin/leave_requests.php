@@ -17,15 +17,22 @@ if(isset($_GET['action']) && isset($_GET['id'])){
 
     if(in_array($action, ['approved','rejected'])){
 
-        $conn->query("
+        // =====================
+        // تحديث الحالة
+        // =====================
+        $stmt = $conn->prepare("
             UPDATE leave_requests 
-            SET status = '$action' 
-            WHERE id = $id
+            SET status = ? 
+            WHERE id = ?
         ");
+        $stmt->bind_param("si", $action, $id);
+        $stmt->execute();
 
-        // 🔔 جلب بيانات الطلب لإرسال إشعار للموظف
+        // =====================
+        // جلب بيانات الطلب
+        // =====================
         $req = $conn->query("
-            SELECT lr.*, e.name AS employee_name 
+            SELECT lr.*, e.name, e.fcm_token
             FROM leave_requests lr
             JOIN employees e ON e.id = lr.employee_id
             WHERE lr.id = $id
@@ -33,16 +40,37 @@ if(isset($_GET['action']) && isset($_GET['id'])){
 
         if($req){
 
-            $title = "تحديث طلب الإجازة";
-            $message = "تم $action طلب الإجازة من {$req['from_date']} إلى {$req['to_date']}";
+            $emp_id = $req['employee_id'];
+            $token  = $req['fcm_token'] ?? null;
 
+            $title = "تحديث طلب الإجازة";
+
+            $statusText = ($action == 'approved') ? "تمت الموافقة" : "تم الرفض";
+
+            $message = "{$statusText} على طلب إجازتك من {$req['from_date']} إلى {$req['to_date']}";
+
+            // =====================
+            // حفظ إشعار في DB
+            // =====================
             $stmt = $conn->prepare("
                 INSERT INTO notifications (user_id, title, `desc`, is_read)
                 VALUES (?, ?, ?, 'unread')
             ");
-
-            $stmt->bind_param("iss", $req['employee_id'], $title, $message);
+            $stmt->bind_param("iss", $emp_id, $title, $message);
             $stmt->execute();
+
+            // =====================
+            // FCM إرسال
+            // =====================
+            $data = [
+                "type" => "leave",
+                "status" => $action,
+                "url" => "/employee/notifications"
+            ];
+
+            if($token){
+                sendFCM($token, $title, $message, $data);
+            }
         }
     }
 

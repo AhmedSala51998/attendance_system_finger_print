@@ -76,8 +76,7 @@ if(isset($_POST['add_leave'])){
     // ❌ لو فيه أخطاء نوقف
     if (!empty($errors)) {
         $msg = implode("<br>", $errors);
-        return;
-    }
+    }else{
 
     // =========================
     // INSERT
@@ -112,7 +111,7 @@ if(isset($_POST['add_leave'])){
         }
 
         $msg = "تم إرسال طلب الإجازة بنجاح!";
-    }
+    }}
 }
 
 /* =========================

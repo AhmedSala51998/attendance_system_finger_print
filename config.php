@@ -88,22 +88,7 @@ function getAccessToken() {
     ]));
 
     $response = curl_exec($ch);
-
-    if(curl_errno($ch)){
-        die("CURL ERROR: " . curl_error($ch));
-    }
-
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
     curl_close($ch);
-
-    echo "<pre>";
-    print_r([
-        "HTTP_CODE" => $httpCode,
-        "RESPONSE" => $response
-    ]);
-    echo "</pre>";
-    die();
 
     $result = json_decode($response, true);
 

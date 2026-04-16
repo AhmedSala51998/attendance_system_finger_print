@@ -106,11 +106,13 @@ function sendFCM($token, $title, $body, $data = []) {
     $payload = [
         "message" => [
             "token" => $token,
-            "notification" => [
+            "data" => [
                 "title" => $title,
-                "body" => $body
-            ],
-            "data" => $data
+                "body" => $body,
+                "url" => $data['url'] ?? "/",
+                "type" => $data['type'] ?? "general",
+                "permission_date" => $data['permission_date'] ?? ""
+            ]
         ]
     ];
 

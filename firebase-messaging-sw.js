@@ -14,16 +14,17 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(function(payload) {
 
-    const url = payload.data?.url || "/";
+    console.log("DATA:", payload.data);
 
-    self.registration.showNotification(payload.notification.title, {
-        body: payload.notification.body,
+    const title = payload.data.title;
+    const body  = payload.data.body;
+    const url   = payload.data.url || "/";
+
+    self.registration.showNotification(title, {
+        body: body,
         icon: "/images/logo.png",
-        data: {
-            url: url
-        }
+        data: { url }
     });
-    console.log(payload);
 });
 
 self.addEventListener("notificationclick", function(event) {

@@ -12,28 +12,35 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage((payload) => {
-    alert("SW TRIGGERED"); // ⚠️ اختبار قوي
-    console.log(payload);
+messaging.onBackgroundMessage(function(payload) {
+
+    console.log("FULL PAYLOAD:", payload);
+
+    const title = payload.data.title;
+    const body  = payload.data.body;
+    const url   = payload.data.url || "/";
+
+    self.registration.showNotification(title, {
+        body: body,
+        icon: "/images/logo.png",
+        data: { url }
+    });
 });
 
-self.addEventListener("notificationclick", function(event) {
+self.addEventListener("push", function(event) {
 
-    event.notification.close();
+    console.log("🔥 PUSH RECEIVED:", event);
 
-    const url = event.notification.data.url;
+    const data = event.data ? event.data.json() : {};
+
+    const title = data?.notification?.title || data?.data?.title || "No title";
+    const body  = data?.notification?.body  || data?.data?.body  || "";
 
     event.waitUntil(
-        clients.matchAll({ type: "window", includeUncontrolled: true })
-        .then(function(clientList) {
-
-            for (const client of clientList) {
-                if (client.url.includes(url) && 'focus' in client) {
-                    return client.focus();
-                }
-            }
-
-            return clients.openWindow(url);
+        self.registration.showNotification(title, {
+            body: body,
+            icon: "/images/logo.png",
+            data: data?.data || {}
         })
     );
 });

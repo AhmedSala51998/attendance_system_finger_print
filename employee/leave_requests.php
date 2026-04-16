@@ -44,7 +44,7 @@ if(isset($_POST['add_leave'])){
     $stmt = $conn->prepare("
         SELECT COUNT(*) 
         FROM holidays 
-        WHERE date BETWEEN ? AND ?
+        WHERE `date` BETWEEN ? AND ?
     ");
     $stmt->bind_param("ss", $from_date, $to_date);
     $stmt->execute();
@@ -61,7 +61,7 @@ if(isset($_POST['add_leave'])){
         SELECT COUNT(*) 
         FROM permissions 
         WHERE employee_id = ?
-        AND date BETWEEN ? AND ? AND status !='rejected'
+        AND `date` BETWEEN ? AND ? AND status !='rejected'
     ");
     $stmt->bind_param("iss", $emp_id, $from_date, $to_date);
     $stmt->execute();

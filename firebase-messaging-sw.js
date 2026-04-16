@@ -29,18 +29,19 @@ messaging.onBackgroundMessage(function(payload) {
 
 self.addEventListener("push", function(event) {
 
-    console.log("🔥 PUSH RECEIVED:", event);
-
     const data = event.data ? event.data.json() : {};
 
-    const title = data?.notification?.title || data?.data?.title || "No title";
-    const body  = data?.notification?.body  || data?.data?.body  || "";
+    const title = data?.data?.title || "No title";
+    const body  = data?.data?.body || "";
+    const url   = data?.data?.url || "/";
 
     event.waitUntil(
         self.registration.showNotification(title, {
             body: body,
             icon: "/images/logo.png",
-            data: data?.data || {}
+            data: {
+                url: url
+            }
         })
     );
 });

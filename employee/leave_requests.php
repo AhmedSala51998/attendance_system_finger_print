@@ -65,8 +65,11 @@ if(isset($_POST['add_leave'])){
     ");
     $stmt->bind_param("iss", $emp_id, $from_date, $to_date);
     $stmt->execute();
-    $stmt->bind_result($perm_count);
-    $stmt->fetch();
+    $result = $stmt->get_result();
+
+    $row = $result->fetch_row();
+    $perm_count = $row[0] ?? 0;
+
     $stmt->close();
 
     if ($perm_count > 0) {

@@ -152,11 +152,9 @@ if(isset($_POST['save_permission'])){
         FROM leave_requests 
         WHERE employee_id=? 
         AND status='approved'
-        AND (
-            (date BETWEEN from_date AND to_date)
-        )
+        AND ? BETWEEN from_date AND to_date
     ");
-    $stmt->bind_param("i", $employee_id);
+    $stmt->bind_param("is", $employee_id, $date);
     $stmt->execute();
     $stmt->bind_result($leave_count);
     $stmt->fetch();

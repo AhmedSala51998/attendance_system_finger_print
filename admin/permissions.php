@@ -365,7 +365,7 @@ Swal.fire({
 <h3>سجل الأذونات</h3>
 
 <div style="overflow-x:auto;">
-<table style="width:100%; min-width:1000px;">
+<table style="width:100%; min-width:700px;">
 <tr>
 <th>الموظف</th>
 <th>التاريخ</th>

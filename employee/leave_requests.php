@@ -73,6 +73,61 @@ if(isset($_POST['add_leave'])){
         $errors[] = "لا يمكن طلب إجازة في أيام يوجد بها أذونات سابقة أو معلقة";
     }
 
+    $start = new DateTime($from_date);
+    $end   = new DateTime($to_date);
+    $end->modify('+1 day');
+
+    $period = new DatePeriod($start, new DateInterval('P1D'), $end);
+
+    foreach ($period as $d) {
+        $date = $d->format('Y-m-d');
+
+        $shift = getShiftDetails($conn, $emp_id, $date);
+
+        if ($shift['is_holiday']) {
+            $errors[] = "❌ لا يمكن طلب إجازة في {$date} لأنه: " . $shift['reason'];
+            break;
+        }
+    }
+
+
+    // 5️⃣ منع تكرار طلب إجازة لنفس الفترة (Overlap)
+    $stmtqq = $conn->prepare("
+        SELECT from_date, to_date, status 
+        FROM leave_requests
+        WHERE employee_id = ?
+        AND (
+            (from_date BETWEEN ? AND ?)
+            OR (to_date BETWEEN ? AND ?)
+            OR (? BETWEEN from_date AND to_date)
+            OR (? BETWEEN from_date AND to_date)
+        )
+        LIMIT 1
+    ");
+
+    $stmtqq->bind_param("issssss", 
+        $emp_id, 
+        $from_date, $to_date, 
+        $from_date, $to_date,
+        $from_date, $to_date
+    );
+
+    $stmtqq->execute();
+    $res = $stmtqq->get_result();
+
+    if ($row = $res->fetch_assoc()) {
+
+        $status = $row['status'];
+
+        if ($status == 'pending') {
+            $errors[] = "⚠️ لقد قمت بإرسال طلب إجازة مسبقًا في هذه الفترة وهو قيد المراجعة";
+        } elseif ($status == 'approved') {
+            $errors[] = "⚠️ لديك إجازة معتمدة بالفعل في هذه الفترة";
+        } elseif ($status == 'rejected') {
+            $errors[] = "⚠️ تم رفض طلب إجازة سابق في هذه الفترة";
+        }
+    }
+
     // ❌ لو فيه أخطاء نوقف
     if (!empty($errors)) {
         $msg = implode("<br>", $errors);

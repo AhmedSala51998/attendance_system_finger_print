@@ -111,7 +111,39 @@ if(isset($_POST['add_permission'])){
                     }
                 }
             }
+            if(!$hasError){
+                $stmtww = $conn->prepare("
+                    SELECT from_time, to_time, status 
+                    FROM permissions
+                    WHERE employee_id = ?
+                    AND date = ?
+                    AND (
+                        (from_time < ? AND to_time > ?) -- overlap
+                    )
+                    LIMIT 1
+                ");
+
+                $stmtww->bind_param("isss", $emp_id, $date, $to, $from);
+                $stmtww->execute();
+                $res = $stmtww->get_result();
+
+                if ($row = $res->fetch_assoc()) {
+
+                    $status = $row['status'];
+
+                    if ($status == 'pending') {
+                        $msg = "⚠️ لديك طلب إذن سابق في نفس الوقت وهو قيد المراجعة";
+                    } elseif ($status == 'approved') {
+                        $msg = "⚠️ لديك إذن معتمد بالفعل في هذا الوقت";
+                    } elseif ($status == 'rejected') {
+                        $msg = "⚠️ تم رفض إذن سابق في نفس الوقت";
+                    }
+
+                    $hasError = true;
+                }
+                
             if(!$hasError){ 
+                
             // ✅ الإدخال طبيعي
             $stmt = $conn->prepare("
                 INSERT INTO permissions 
@@ -164,7 +196,7 @@ if(isset($_POST['add_permission'])){
                 $msg = "✅ تم إرسال طلب الإذن بنجاح!";
             }
 
-         }}
+         }}}
         }
     }
 }

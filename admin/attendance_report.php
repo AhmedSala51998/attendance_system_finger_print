@@ -165,7 +165,7 @@ include "../layout/header.php";
                 <?php while($s = $stats_result->fetch_assoc()): ?>
                     <?php 
                     // جلب تفاصيل التأخير لكل الموظفين لضمه للكارت
-                    $days_sql = "SELECT date, late_minutes FROM attendance WHERE employee_id={$s['id']} AND status='late' AND MONTH(date)='$selected_month' AND YEAR(date)='$selected_year' ORDER BY date ASC";
+                    $days_sql = "SELECT date, late_minutes FROM attendance WHERE employee_id={$s['id']} AND status='late' AND late_minutes > 15 AND MONTH(date)='$selected_month' AND YEAR(date)='$selected_year' ORDER BY date ASC";
                     $days_res = $conn->query($days_sql);
                     $late_days_json = [];
                     while($d = $days_res->fetch_assoc()){ $late_days_json[] = $d; }

@@ -2,7 +2,7 @@ import time
 import requests
 from datetime import datetime
 
-EMPLOYEE_ID = 6
+EMPLOYEE_ID = 5
 SERVER_URL = "https://attendanceejaz.codeyla.com/heartbeat"
 
 AW_LOCAL_API = "http://127.0.0.1:5600/api/0"
